@@ -18,8 +18,8 @@ RUN apk update -q && apk --no-cache -q add \
     rm glibc-2.32-r0.apk && \
     rm -r /var/cache/apk/APKINDEX.* && \
     rm -rf /tmp/* /var/cache/apk/* /var/tmp/*
-RUN wget https://rclone.org/install.sh
-RUN bash install.sh
+COPY setup.sh .
+RUN bash setup.sh
 COPY . .
 RUN chmod +x extract
 CMD ["bash","start.sh"]
