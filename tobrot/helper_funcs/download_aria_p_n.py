@@ -72,40 +72,12 @@ async def aria_start():
     aria2_daemon_start_cmd = []
     # start the daemon, aria2c command
     aria2_daemon_start_cmd.append("aria2c")
-    aria2_daemon_start_cmd.append("--allow-overwrite=true")
+    aria2_daemon_start_cmd.append("--conf-path=aria2.conf")
     aria2_daemon_start_cmd.append("--daemon=true")
     # aria2_daemon_start_cmd.append(f"--dir={DOWNLOAD_LOCATION}")
     # TODO: this does not work, need to investigate this.
     # but for now, https://t.me/TrollVoiceBot?start=858
-    aria2_daemon_start_cmd.append("--enable-rpc")
-    aria2_daemon_start_cmd.append("--follow-torrent=mem")
-    aria2_daemon_start_cmd.append("--max-connection-per-server=10")
-    aria2_daemon_start_cmd.append("--min-split-size=10M")
-    aria2_daemon_start_cmd.append("--rpc-listen-all=false")
-    aria2_daemon_start_cmd.append(f"--rpc-listen-port={ARIA_TWO_STARTED_PORT}")
-    aria2_daemon_start_cmd.append("--rpc-max-request-size=1024M")
-    aria2_daemon_start_cmd.append("--seed-time=0")
-    aria2_daemon_start_cmd.append("--max-overall-upload-limit=1K")
-    aria2_daemon_start_cmd.append("--split=10")
-    aria2_daemon_start_cmd.append(
-        f"--bt-stop-timeout={MAX_TIME_TO_WAIT_FOR_TORRENTS_TO_START}"
-    )
-    aria2_daemon_start_cmd.append("--bt-max-peers=0")
-    aria2_daemon_start_cmd.append(f"--bt-tracker={sonstringtrckr}")
-    aria2_daemon_start_cmd.append("--check-certificate=false")
-    aria2_daemon_start_cmd.append("--peer-id-prefix=-qB4220-")
-    aria2_daemon_start_cmd.append("--user-agent=qBittorrent/4.2.2")
-    aria2_daemon_start_cmd.append("--bt-enable-lpd=true")
-    aria2_daemon_start_cmd.append("--continue=true")
-    aria2_daemon_start_cmd.append("--max-file-not-found=5")
-    aria2_daemon_start_cmd.append("--max-tries=5")
-    aria2_daemon_start_cmd.append("--retry-wait=5")
-    aria2_daemon_start_cmd.append("--auto-file-renaming=true")
-    aria2_daemon_start_cmd.append("--reuse-uri=true")
-    aria2_daemon_start_cmd.append("--http-accept-gzip=true")
-    aria2_daemon_start_cmd.append("--referer=*")
-    aria2_daemon_start_cmd.append("--content-disposition-default-utf8=true")
-    aria2_daemon_start_cmd.append(f"--max-concurrent-downloads={MAX_CONCURRENT_DOWNLOADS}")
+    
     #
     LOGGER.info(aria2_daemon_start_cmd)
     #
