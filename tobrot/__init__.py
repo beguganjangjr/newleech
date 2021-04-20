@@ -1,7 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-# (c) Shrimadhav U K | gautamajay52
-
 import logging
 import os
 import time
@@ -33,17 +29,17 @@ logging.getLogger("PIL").setLevel(logging.WARNING)
 
 LOGGER = logging.getLogger(__name__)
 
-dotenv.load_dotenv("config.env")
+#dotenv.load_dotenv("config.env")
 
 # checking compulsory variable
-for imp in ["TG_BOT_TOKEN", "APP_ID", "API_HASH", "OWNER_ID", "AUTH_CHANNEL"]:
-    try:
-        value = os.environ[imp]
-        if not value:
-            raise KeyError
-    except KeyError:
-        LOGGER.critical(f"Oh...{imp} is missing from config.env ... fill that")
-        exit()
+#for imp in ["TG_BOT_TOKEN", "APP_ID", "API_HASH", "OWNER_ID", "AUTH_CHANNEL"]:
+#    try:
+#        value = os.environ[imp]
+#        if not value:
+#            raise KeyError
+#    except KeyError:
+#        LOGGER.critical(f"Oh...{imp} is missing from config.env ... fill that")
+#        exit()
 
 # The Telegram API things
 TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "")
