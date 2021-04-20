@@ -1,13 +1,9 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-# (c) Thor-Ragnarok | ML BotUpdates
-
 import asyncio
 import logging
 import os
 import sys
 import time
-
+import requests
 import aria2p
 from pyrogram.errors import FloodWait, MessageNotModified
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
@@ -19,6 +15,7 @@ from tobrot import (
     EDIT_SLEEP_TIME_OUT,
     LOGGER,
     MAX_TIME_TO_WAIT_FOR_TORRENTS_TO_START,
+#    MAX_CONCURRENT_DOWNLOADS,
 )
 from tobrot.helper_funcs.create_compressed_archive import (
     create_archive,
@@ -27,9 +24,45 @@ from tobrot.helper_funcs.create_compressed_archive import (
 )
 from tobrot.helper_funcs.extract_link_from_message import extract_link
 from tobrot.helper_funcs.upload_to_tg import upload_to_gdrive, upload_to_tg
+from tobrot.helper_funcs.direct_link_generator import direct_link_generator
+from tobrot.helper_funcs.exceptions import DirectDownloadLinkException
 
+def KopyasizListe(string):
+    kopyasiz = list(string.split(","))
+    kopyasiz = list(dict.fromkeys(kopyasiz))
+    return kopyasiz
+
+def Virgullustring(string):
+    string = string.replace("\n\n",",")
+    string = string.replace("\n",",")
+    string = string.replace(",,",",")
+    string = string.rstrip(',')
+    string = string.lstrip(',')
+    return string
+
+tracker_urlsss = [
+    "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt",
+    "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt",
+    "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all.txt"
+    ]
+tumtorrenttrackerstringi = ""
+sonstringtrckr = ""
+for i in range(len(tracker_urlsss)):
+    response = requests.get(tracker_urlsss[i])
+    response.encoding = "utf-8"
+    tumtorrenttrackerstringi += "\n"
+    tumtorrenttrackerstringi += response.text
+trackerlistemiz = KopyasizListe(Virgullustring(tumtorrenttrackerstringi))
+sonstringtrckr = ','.join(trackerlistemiz)
+# LOGGER.info(sonstringtrckr)
+# trackelreri alıyoz dinamik olarak
 sys.setrecursionlimit(10 ** 4)
-
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logging.getLogger("pyrogram").setLevel(logging.WARNING)
+LOGGER = logging.getLogger(__name__)
 
 async def aria_start():
     aria2_daemon_start_cmd = []
@@ -53,6 +86,22 @@ async def aria_start():
     aria2_daemon_start_cmd.append(
         f"--bt-stop-timeout={MAX_TIME_TO_WAIT_FOR_TORRENTS_TO_START}"
     )
+    aria2_daemon_start_cmd.append("--bt-max-peers=0")
+    aria2_daemon_start_cmd.append(f"--bt-tracker={sonstringtrckr}")
+    aria2_daemon_start_cmd.append("--check-certificate=false")
+    aria2_daemon_start_cmd.append("--peer-id-prefix=-qB4220-")
+    aria2_daemon_start_cmd.append("--user-agent=qBittorrent/4.2.2")
+    aria2_daemon_start_cmd.append("--bt-enable-lpd=true")
+    aria2_daemon_start_cmd.append("--continue=true")
+    aria2_daemon_start_cmd.append("--max-file-not-found=5")
+    aria2_daemon_start_cmd.append("--max-tries=5")
+    aria2_daemon_start_cmd.append("--retry-wait=5")
+    aria2_daemon_start_cmd.append("--auto-file-renaming=true")
+    aria2_daemon_start_cmd.append("--reuse-uri=true")
+    aria2_daemon_start_cmd.append("--http-accept-gzip=true")
+    aria2_daemon_start_cmd.append("--referer=*")
+    aria2_daemon_start_cmd.append("--content-disposition-default-utf8=true")
+#    aria2_daemon_start_cmd.append(f"--max-concurrent-downloads={MAX_CONCURRENT_DOWNLOADS}")
     #
     LOGGER.info(aria2_daemon_start_cmd)
     #
@@ -120,7 +169,19 @@ def add_url(aria_instance, text_url, c_file_name):
     #     options = {
     #         "dir": c_file_name
     #     }
-    uris = [text_url]
+    if "zippyshare.com" in text_url \
+        or "osdn.net" in text_url \
+        or "mediafire.com" in text_url \
+        or "cloud.mail.ru" in text_url \
+        or "github.com" in text_url \
+        or "yadi.sk" in text_url:
+            try:
+                urisitring = direct_link_generator(text_url)
+                uris = [urisitring]
+            except DirectDownloadLinkException as e:
+                LOGGER.info(f'{text_url}: {e}')
+    else:
+         uris = [text_url]
     # Add URL Into Queue
     try:
         download = aria_instance.add_uris(uris, options=options)
