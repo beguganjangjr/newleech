@@ -1,38 +1,25 @@
-FROM ubuntu:20.04
-
+FROM alpine:edge
 
 RUN mkdir ./app
 RUN chmod 777 ./app
 WORKDIR /app
 
-ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=Asia/Kolkata
-
-RUN apt -qq update --fix-missing && \
-    apt -qq install -y git \
-    aria2 \
-    wget \
-    curl \
-    busybox \
-    unzip \
-    unrar \
-    tar \
-    python3 \
-    ffmpeg \
-    python3-pip \
-    p7zip-full \
-    p7zip-rar
-
+RUN sed -e 's;^#http\(.*\)/edge/community;http\1/edge/community;g' -i /etc/apk/repositories
+RUN apk update -q && apk --no-cache -q add \
+    python3-dev py3-pip py3-lxml p7zip \
+    ffmpeg unzip unrar tar wget curl bash git && \
+    apk add -qq --no-cache --virtual .build-deps \
+    build-base zlib-dev jpeg-dev  \
+    libffi-dev libxml2-dev libxslt-dev && \
+    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
+    wget -q https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.32-r0/glibc-2.32-r0.apk && \
+    apk add -q glibc-2.32-r0.apk && \
+    rm /etc/apk/keys/sgerrand.rsa.pub && \
+    rm glibc-2.32-r0.apk && \
+    rm -r /var/cache/apk/APKINDEX.* && \
+    rm -rf /tmp/* /var/cache/apk/* /var/tmp/*
 RUN wget https://rclone.org/install.sh
 RUN bash install.sh
-
-RUN mkdir /app/gautam
-RUN wget -O /app/gautam/gclone.gz https://git.io/JJMSG
-RUN gzip -d /app/gautam/gclone.gz
-RUN chmod 0775 /app/gautam/gclone
-
-COPY requirements.txt .
-RUN pip3 install --no-cache-dir -r requirements.txt
 COPY . .
 RUN chmod +x extract
 CMD ["bash","start.sh"]
