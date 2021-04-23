@@ -7,7 +7,7 @@ WORKDIR /app
 
 RUN sed -e 's;^#http\(.*\)/edge/community;http\1/edge/community;g' -i /etc/apk/repositories
 RUN apk update && apk add --no-cache -q \
-    python3-dev python3 py3-pip \
+    python3-dev py3-pip p7zip\
     ffmpeg unzip unrar tar wget curl bash git && \
     apk add -qq --no-cache --virtual .build-deps \
     build-base zlib-dev jpeg-dev gcc musl-dev \
@@ -27,10 +27,10 @@ RUN bash setup.sh
 
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
-RUN apk del .build-deps
+#RUN apk del .build-deps
 
 COPY . .
 
-RUN apk del .build-deps
+#RUN apk del .build-deps
 RUN chmod +x extract
 CMD ["bash","start.sh"]
