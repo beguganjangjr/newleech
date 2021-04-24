@@ -158,17 +158,16 @@ async def call_apropriate_function(
     await check_progress_for_dl(
         aria_instance, err_message, sent_message_to_update_tg_p, None
     )
-    if incoming_link.startswith("magnet:"):
-        #
-        err_message = await check_metadata(aria_instance, err_message)
-        #
-        await asyncio.sleep(1)
-        if err_message is not None:
+    
+    has_metadata = aria_instance.client.tell_status(err_message, ["followedBy"])
+        if has_metadata:
+            err_message = has_metadata["followedBy"][0]
             await check_progress_for_dl(
-                aria_instance, err_message, sent_message_to_update_tg_p, None
+                aria_instance,
+                err_message,
+                sent_message_to_update_tg_p,
+                None
             )
-        else:
-            return False, "can't get metadata \n\n#MetaDataError"
     await asyncio.sleep(1)
     file = aria_instance.get_download(err_message)
     to_upload_file = file.name
@@ -375,12 +374,3 @@ async def check_progress_for_dl(aria2, gid, event, previous_message):
 # https://github.com/jaskaranSM/UniBorg/blob/6d35cf452bce1204613929d4da7530058785b6b1/stdplugins/aria.py#L136-L164
 
 
-async def check_metadata(aria2, gid):
-    file = aria2.get_download(gid)
-    LOGGER.info(file)
-    if not file.followed_by_ids:
-        # https://t.me/c/1213160642/496
-        return None
-    new_gid = file.followed_by_ids[0]
-    LOGGER.info("Changing GID " + gid + " to " + new_gid)
-    return new_gid
