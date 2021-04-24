@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-<<<<<<< HEAD
-# (c) @TN57_BotZ
-=======
 # (c) Shrimadhav U K | gautamajay52
->>>>>>> c863725f40d16c2ad68e86602bc4a6e1c38c58b8
 
 import asyncio
 import logging
@@ -95,15 +91,9 @@ async def upload_to_tg(
             LOGGER.info("TODO")
             d_f_s = humanbytes(os.path.getsize(local_file_name))
             i_m_s_g = await message.reply_text(
-<<<<<<< HEAD
-                "Telegram Has <b>API</b> Limit In Uploading Files 1.95GB\n"
-                f"Detected File Size: {d_f_s} 😏\n"
-                "\n🤒 trying to split the files 🤕🤒😷"
-=======
                 "Telegram does not support uploading this file.\n"
                 f"Detected File Size: {d_f_s} 😡\n"
                 "\n🤖 trying to split the files 🌝🌝🌚"
->>>>>>> c863725f40d16c2ad68e86602bc4a6e1c38c58b8
             )
             splitted_dir = await split_large_files(local_file_name)
             totlaa_sleif = os.listdir(splitted_dir)
@@ -112,11 +102,7 @@ async def upload_to_tg(
             LOGGER.info(totlaa_sleif)
             ba_se_file_name = os.path.basename(local_file_name)
             await i_m_s_g.edit_text(
-<<<<<<< HEAD
-                f"Detected File Size: {d_f_s} 😏\n"
-=======
                 f"Detected File Size: {d_f_s} 😡\n"
->>>>>>> c863725f40d16c2ad68e86602bc4a6e1c38c58b8
                 f"<code>{ba_se_file_name}</code> splitted into {number_of_files} files.\n"
                 "trying to upload to Telegram, now ..."
             )
@@ -231,11 +217,7 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
         button_markup = pyrogram.InlineKeyboardMarkup(button)
         await asyncio.sleep(EDIT_SLEEP_TIME_OUT)
         await messa_ge.reply_text(
-<<<<<<< HEAD
-            f"😇: Uploaded successfully `{os.path.basename(file_upload)}` <a href='tg://user?id={g_id}'>✔️</a>\n📀 Size: {gjay}",
-=======
             f"🤖: Uploaded successfully `{os.path.basename(file_upload)}` <a href='tg://user?id={g_id}'>🤒</a>\n📀 Size: {gjay}",
->>>>>>> c863725f40d16c2ad68e86602bc4a6e1c38c58b8
             reply_markup=button_markup,
         )
         os.remove(file_upload)
@@ -303,11 +285,7 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
         button_markup = pyrogram.InlineKeyboardMarkup(button)
         await asyncio.sleep(EDIT_SLEEP_TIME_OUT)
         await messa_ge.reply_text(
-<<<<<<< HEAD
-            f"😇: Uploaded successfully `{os.path.basename(file_upload)}` <a href='tg://user?id={g_id}'>✔️</a>\n📀 Size: {gjay}",
-=======
             f"🤖: Uploaded successfully `{os.path.basename(file_upload)}` <a href='tg://user?id={g_id}'>🤒</a>\n📀 Size: {gjay}",
->>>>>>> c863725f40d16c2ad68e86602bc4a6e1c38c58b8
             reply_markup=button_markup,
         )
         shutil.rmtree(file_upload)

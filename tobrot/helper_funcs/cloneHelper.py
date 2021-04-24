@@ -1,11 +1,7 @@
 # This is code to clone the gdrive link using the gclone, all credit goes to the developer who has developed the rclone/glclone
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-<<<<<<< HEAD
-# (c) @TN57_BotZ
-=======
 # (c) gautamajay52
->>>>>>> c863725f40d16c2ad68e86602bc4a6e1c38c58b8
 
 
 import asyncio

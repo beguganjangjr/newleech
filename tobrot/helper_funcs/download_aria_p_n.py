@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-<<<<<<< HEAD
-# (c) Thor-Ragnarok | ML BotUpdates
-=======
 # (c) Shrimadhav U K | gautamajay52
->>>>>>> c863725f40d16c2ad68e86602bc4a6e1c38c58b8
 
 import asyncio
 import logging
@@ -85,11 +81,7 @@ def add_magnet(aria_instance, magnetic_link, c_file_name):
     except Exception as e:
         return (
             False,
-<<<<<<< HEAD
-            "**FAILED** \n" + str(e) + " \nPlease do not send SLOW links. \nAsk For Help Here @TN57_BotzSupport",
-=======
             "**FAILED** \n" + str(e) + " \nPlease do not send SLOW links. Read /help",
->>>>>>> c863725f40d16c2ad68e86602bc4a6e1c38c58b8
         )
     else:
         return True, "" + download.gid + ""
@@ -112,13 +104,9 @@ def add_torrent(aria_instance, torrent_file_path):
         except Exception as e:
             return (
                 False,
-<<<<<<< HEAD
-                "**FAILED** \n" + str(e) + " \nPlease do not send SLOW links. \nAsk For Help Here @TN57_BotzSupport",
-=======
                 "**FAILED** \n"
                 + str(e)
                 + " \nPlease do not send SLOW links. Read /help",
->>>>>>> c863725f40d16c2ad68e86602bc4a6e1c38c58b8
             )
         else:
             return True, "" + download.gid + ""
@@ -139,11 +127,7 @@ def add_url(aria_instance, text_url, c_file_name):
     except Exception as e:
         return (
             False,
-<<<<<<< HEAD
-            "**FAILED** \n" + str(e) + " \nPlease do not send SLOW links. \nAsk For Help Here @TN57_BotzSupport",
-=======
             "**FAILED** \n" + str(e) + " \nPlease do not send SLOW links. Read /help",
->>>>>>> c863725f40d16c2ad68e86602bc4a6e1c38c58b8
         )
     else:
         return True, "" + download.gid + ""
@@ -257,11 +241,7 @@ async def call_apropriate_function(
                         f"<a href='tg://user?id={user_id}'>Your Requested Files</a>\n\n"
                     )
                     message_to_send = mention_req_user + message_to_send
-<<<<<<< HEAD
-                    message_to_send = message_to_send + "\n\n" + "Uploaded By : @TN57_BotZ 🤓"
-=======
                     message_to_send = message_to_send + "\n\n" + "#uploads"
->>>>>>> c863725f40d16c2ad68e86602bc4a6e1c38c58b8
                 else:
                     message_to_send = "<i>FAILED</i> to upload files. 😞😞"
                 await user_message.reply_text(

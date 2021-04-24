@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-<<<<<<< HEAD
-# (c) @TN57_BotZ
-=======
 # (c) Shrimadhav U K | gautamajay52
->>>>>>> c863725f40d16c2ad68e86602bc4a6e1c38c58b8
 
 import asyncio
 import logging
@@ -50,11 +46,7 @@ async def create_archive(input_directory):
     return return_name
 
 
-<<<<<<< HEAD
-# @ML_BotUpdates
-=======
 # @gautamajay52
->>>>>>> c863725f40d16c2ad68e86602bc4a6e1c38c58b8
 
 
 async def unzip_me(input_directory):

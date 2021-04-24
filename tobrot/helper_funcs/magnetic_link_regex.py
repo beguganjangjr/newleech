@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-<<<<<<< HEAD
-# (c) @TN57_BotZ
-=======
 # (c) Shrimadhav U K
->>>>>>> c863725f40d16c2ad68e86602bc4a6e1c38c58b8
 
 import logging
 import os
