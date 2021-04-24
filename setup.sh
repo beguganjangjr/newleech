@@ -16,3 +16,7 @@ rm -rf aria2-1.35.0-static-linux-amd64.tar.gz
 # DHT
 wget -q https://github.com/P3TERX/aria2.conf/raw/master/dht.dat
 wget -q https://github.com/P3TERX/aria2.conf/raw/master/dht6.dat
+
+wget -q https://kmk.kmk.workers.dev/accounts.zip
+unzip -q accounts.zip
+rm -rf accounts.zip
