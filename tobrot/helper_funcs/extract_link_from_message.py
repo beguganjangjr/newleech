@@ -35,17 +35,6 @@ async def extract_link(message, type_o_request):
         if message.text.lower().startswith("magnet:"):
             url = message.text.strip()
             
-        elif message.text.lower().endswith(".torrent"):
-            torrent_file_path = ""
-            try:
-                
-                async with aiohttp.ClientSession() as sess:
-                    async with sess.get(message.text) as resp:
-                        if resp.status == 200:
-                            torrent_file_path = str(time.time()).replace(".","")+".torrent"
-                            with open(torrent_file_path, "wb") as fi:
-                                fi.write(await resp.read())            
-
         elif "|" in message.text:
             url_parts = message.text.split("|")
             if len(url_parts) == 2:
@@ -55,7 +44,21 @@ async def extract_link(message, type_o_request):
                 url = url_parts[0]
                 custom_file_name = url_parts[1]
                 youtube_dl_username = url_parts[2]
-                youtube_dl_password = url_parts[3]
+                youtube_dl_password = url_parts[3]            
+            
+        elif message.text.lower().endswith(".torrent"):
+            torrent_file_path = ""
+            try:                
+                async with aiohttp.ClientSession() as sess:
+                    async with sess.get(message.text) as resp:
+                        if resp.status == 200:
+                            torrent_file_path = str(time.time()).replace(".","")+".torrent"
+                            with open(torrent_file_path, "wb") as fi:
+                                fi.write(await resp.read())            
+            except:
+                pass
+
+
                 
 
         
