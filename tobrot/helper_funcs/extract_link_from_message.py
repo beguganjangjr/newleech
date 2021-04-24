@@ -37,12 +37,14 @@ async def extract_link(message, type_o_request):
             
         elif message.text.lower().endswith(".torrent"):
             torrent_file_path = ""
-            async with aiohttp.ClientSession() as sess:
-                async with sess.get(message.text) as resp:
-                    if resp.status == 200:
-                        torrent_file_path = str(time.time()).replace(".","")+".torrent"
-                        with open(torrent_file_path, "wb") as fi:
-                            fi.write(await resp.read())            
+            try:
+                
+                async with aiohttp.ClientSession() as sess:
+                    async with sess.get(message.text) as resp:
+                        if resp.status == 200:
+                            torrent_file_path = str(time.time()).replace(".","")+".torrent"
+                            with open(torrent_file_path, "wb") as fi:
+                                fi.write(await resp.read())            
 
         elif "|" in message.text:
             url_parts = message.text.split("|")
