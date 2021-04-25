@@ -168,7 +168,7 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
             "--local-no-check-updated",
             "--ignore-existing",
             "--ignore-checksum",
-            "--exclude=.{nfo,torrent,exe}",
+            "--exclude=*.{nfo,torrent,exe}",
             "-v",
         ]
         LOGGER.info(g_au)
@@ -240,7 +240,7 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
             "--local-no-check-updated",
             "--ignore-existing",
             "--ignore-checksum",
-            "--exclude=.{nfo,torrent,exe}",            
+            "--exclude=*.{nfo,torrent,exe}",            
             "-v",
         ]
         LOGGER.info(t_am)
