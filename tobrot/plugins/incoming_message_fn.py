@@ -5,7 +5,7 @@
 import asyncio
 import logging
 import os
-import time
+import time, aiohttp
 from pathlib import Path
 import aria2p
 import requests
