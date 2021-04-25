@@ -156,7 +156,18 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
             gUP = re.findall("\[(.*)\]", con)[0]
             LOGGER.info(gUP)
     destination = f"{DESTINATION_FOLDER}"
-    arg = f"{ARGUMENTS}"
+    arguments = f"{ARGUMENTS}"
+    args = arguments.split(" ")
+    arg1 = None
+    arg2 = None
+    arg3 = None
+    arg4 = None   
+    if len(args) >= 1:
+        arg1 = " ".join(args[0:])
+        arg2 = " ".join(args[1:])
+        arg3 = " ".join(args[2:])
+        arg4 = " ".join(args[3:])
+        
     file_upload = str(Path(file_upload).resolve())
     LOGGER.info(file_upload)
     if os.path.isfile(file_upload):
@@ -166,7 +177,10 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
             "--config=rclone.conf",
             f"{file_upload}",
             f"{gUP}:{destination}",
-            f"{arg}",
+            f"{arg1}",
+            f"{arg2}",
+            f"{arg3}",
+            f"{arg4}",
             "-v",
         ]
         LOGGER.info(g_au)
