@@ -164,6 +164,11 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
             "--config=rclone.conf",
             f"{file_upload}",
             f"{gUP}:{destination}",
+            "--drive-chunk-size=64M",
+            "--local-no-check-updated",
+            "--ignore-existing",
+            "--ignore-checksum",
+            "--exclude=.{nfo,torrent,exe}",
             "-v",
         ]
         LOGGER.info(g_au)
