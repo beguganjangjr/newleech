@@ -54,6 +54,7 @@ async def extract_link(message, type_o_request):
                     async with sess.get(message.text) as resp:
                         if resp.status == 200:
                             torrent_file_path = str(time.time()).replace(".","")+".torrent"
+                            LOGGER.info(torrent_file_path)
                             with open(torrent_file_path, "wb") as fi:
                                 fi.write(await resp.read())            
             except:
