@@ -32,8 +32,8 @@ async def extract_link(message, type_o_request):
         custom_file_name = None
 
     elif message.text is not None:
-        #if message.text.lower().startswith("magnet:"):
-        #    url = message.text.strip()
+        if message.text.lower().startswith("magnet:"):
+            url = message.text.strip()
             
            
             
@@ -41,18 +41,15 @@ async def extract_link(message, type_o_request):
             torr = message.text.strip()
             LOGGER.info(message.text)
             path = ""
-            try:
-                async with aiohttp.ClientSession() as sess:
-                    async with sess.get(torr) as resp:
-                        if resp.status == 200:
-                            path = str(time.time()).replace(".","")+".torrent"
-                            LOGGER.info(path)
-                            with open(path, "wb") as fi:
-                                fi.write(await resp.read())
-                                url = await path.download()
-            except:
-                LOGGER.info("no torrent file")
-                return
+            async with aiohttp.ClientSession() as sess:
+                async with sess.get(torr) as resp:
+                    if resp.status == 200:
+                        path = str(time.time()).replace(".","")+".torrent"
+                        LOGGER.info(path)
+                        with open(path, "wb") as fi:
+                            fi.write(await resp.read())
+                            url = await path.download()
+            
 
                 
         elif "|" in message.text:
@@ -66,8 +63,8 @@ async def extract_link(message, type_o_request):
                 youtube_dl_username = url_parts[2]
                 youtube_dl_password = url_parts[3] 
         
-        #elif message.entities is not None:
-        #    url = extract_url_from_entity(message.entities, message.text)
+        elif message.entities is not None:
+            url = extract_url_from_entity(message.entities, message.text)
 
         else:
             url = message.text.strip()
