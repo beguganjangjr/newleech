@@ -52,7 +52,7 @@ async def incoming_purge_message_f(client, message):
 async def incoming_message_f(client, message):
     """/leech command or /gleech command"""
     user_command = message.command[0]
-    LOGGER.info(user_command)
+    #LOGGER.info(user_command)
     g_id = message.from_user.id
     credit = await message.reply_text(
         f"🧲 Leeching for you <a href='tg://user?id={g_id}'>🤕</a>", parse_mode="html"
@@ -64,7 +64,17 @@ async def incoming_message_f(client, message):
         LOGGER.info(dl_url)
         LOGGER.info(cf_name)
     elif len(message.command) == 2:
-        dl_url = message.command[1]
+        link = message.command[1]
+        if link.lower().endswith(".torrent"):
+            dl_url = ""
+            async with aiohttp.ClientSession() as sess:
+                async with sess.get(link) as resp:
+                    if resp.status == 200:
+                        dl_url = str(time.time()).replace(".","")+".torrent"
+                        with open(dl_url, "wb") as fi:
+                            fi.write(await resp.read())
+        else:
+            dl_url = link
         LOGGER.info(dl_url)
         cf_name = None
     else:
