@@ -69,8 +69,8 @@ async def extract_link(message, type_o_request):
         elif message.entities is not None:
             url = extract_url_from_entity(message.entities, message.text)
 
-        else:
-            url = message.text.strip()
+        #else:
+         #   url = message.text.strip()
 
     elif message.document is not None:
         if message.document.file_name.lower().endswith(".torrent"):
