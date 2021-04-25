@@ -40,13 +40,13 @@ async def extract_link(message, type_o_request):
         if message.text.lower().endswith(".torrent") or ".torrent" in message.text:
             torr = message.text.strip()
             LOGGER.info(message.text)
-            path = ""
+            url = ""
             async with aiohttp.ClientSession() as sess:
                 async with sess.get(torr) as resp:
                     if resp.status == 200:
-                        path = str(time.time()).replace(".","")+".torrent"
-                        LOGGER.info(path)
-                        with open(path, "wb") as fi:
+                        url = str(time.time()).replace(".","")+".torrent"
+                        LOGGER.info(url)
+                        with open(url, "wb") as fi:
                             fi.write(await resp.read())
                             #url = await fi.write(await resp.read()).download()
             
