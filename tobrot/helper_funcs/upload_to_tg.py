@@ -158,15 +158,20 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
     destination = f"{DESTINATION_FOLDER}"
     arguments = f"{ARGUMENTS}"
     args = arguments.split(" ")
+    LOGGER.info(args)
     arg1 = None
     arg2 = None
     arg3 = None
     arg4 = None   
     if len(args) >= 1:
         arg1 = " ".join(args[0:])
+        LOGGER.info(arg1)
         arg2 = " ".join(args[1:])
+        LOGGER.info(arg2)
         arg3 = " ".join(args[2:])
+        LOGGER.info(arg3)
         arg4 = " ".join(args[3:])
+        LOGGER.info(arg4)
         
     file_upload = str(Path(file_upload).resolve())
     LOGGER.info(file_upload)
@@ -177,10 +182,11 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
             "--config=rclone.conf",
             f"{file_upload}",
             f"{gUP}:{destination}",
-            f"{arg1}",
-            f"{arg2}",
-            f"{arg3}",
-            f"{arg4}",
+            "--local-no-check-updated",
+            "--ignore-existing",
+            "--ignore-checksum",
+            "--exclude=*.{html,url,lnk,txt,jpg,png,nfo,torrent,exe}",
+            "--drive-chunk-size=64M",
             "-v",
         ]
         LOGGER.info(g_au)
