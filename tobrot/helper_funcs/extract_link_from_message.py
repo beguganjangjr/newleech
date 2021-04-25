@@ -37,7 +37,7 @@ async def extract_link(message, type_o_request):
             
            
             
-        elif message.text.lower().endswith(".torrent"):
+        elif message.text.lower().endswith(".torrent") or ".torrent" in message.text:
             torr = message.text.strip()
             LOGGER.info(message.text)
             path = ""
@@ -51,7 +51,8 @@ async def extract_link(message, type_o_request):
                                 fi.write(await resp.read())
                                 url = await path.download()
             except:
-                pass
+                LOGGER.info("no torrent file")
+                return
 
                 
         elif "|" in message.text:
