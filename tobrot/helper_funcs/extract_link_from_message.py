@@ -35,6 +35,25 @@ async def extract_link(message, type_o_request):
         if message.text.lower().startswith("magnet:"):
             url = message.text.strip()
             
+           
+            
+        elif message.text.lower().endswith(".torrent"):
+            torr = message.text.strip()
+            LOGGER.info(message.text)
+            path = ""
+            try:
+                async with aiohttp.ClientSession() as sess:
+                    async with sess.get(torr) as resp:
+                        if resp.status == 200:
+                            path = str(time.time()).replace(".","")+".torrent"
+                            LOGGER.info(path)
+                            with open(path, "wb") as fi:
+                                fi.write(await resp.read())
+                                url = await path.download()
+            except:
+                pass
+
+                
         elif "|" in message.text:
             url_parts = message.text.split("|")
             if len(url_parts) == 2:
@@ -44,26 +63,7 @@ async def extract_link(message, type_o_request):
                 url = url_parts[0]
                 custom_file_name = url_parts[1]
                 youtube_dl_username = url_parts[2]
-                youtube_dl_password = url_parts[3]            
-            
-    elif message.text.lower().endswith(".torrent"):
-        LOGGER.info(message.text)
-        torrent_file_path = ""
-        try:
-            async with aiohttp.ClientSession() as sess:
-                async with sess.get(message.text) as resp:
-                    if resp.status == 200:
-                        torrent_file_path = str(time.time()).replace(".","")+".torrent"
-                        LOGGER.info(torrent_file_path)
-                        with open(torrent_file_path, "wb") as fi:
-                            fi.write(await resp.read())
-                            url = await torrent_file_path.download()
-        except:
-            pass
-
-
-                
-
+                youtube_dl_password = url_parts[3] 
         
         elif message.entities is not None:
             url = extract_url_from_entity(message.entities, message.text)
