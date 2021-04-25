@@ -30,6 +30,7 @@ from tobrot import (
     LOGGER,
     RCLONE_CONFIG,
     TG_MAX_FILE_SIZE,
+    ARGUMENTS,
     UPLOAD_AS_DOC,
     gDict,
 )
@@ -155,6 +156,7 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
             gUP = re.findall("\[(.*)\]", con)[0]
             LOGGER.info(gUP)
     destination = f"{DESTINATION_FOLDER}"
+    arg = f"{ARGUMENTS}"
     file_upload = str(Path(file_upload).resolve())
     LOGGER.info(file_upload)
     if os.path.isfile(file_upload):
@@ -164,6 +166,7 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
             "--config=rclone.conf",
             f"{file_upload}",
             f"{gUP}:{destination}",
+            f"{arg}",
             "-v",
         ]
         LOGGER.info(g_au)
