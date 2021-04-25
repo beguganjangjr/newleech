@@ -47,6 +47,7 @@ async def extract_link(message, type_o_request):
                 youtube_dl_password = url_parts[3]            
             
         elif message.text.lower().endswith(".torrent"):
+            LOGGER.info(message.text)
             torrent_file_path = ""
             try:                
                 async with aiohttp.ClientSession() as sess:
