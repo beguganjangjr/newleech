@@ -48,7 +48,7 @@ async def extract_link(message, type_o_request):
                         LOGGER.info(path)
                         with open(path, "wb") as fi:
                             fi.write(await resp.read())
-                            url = await path.download()
+                            #url = await fi.write(await resp.read()).download()
             
 
                 
