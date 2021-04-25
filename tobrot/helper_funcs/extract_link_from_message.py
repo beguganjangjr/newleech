@@ -32,12 +32,12 @@ async def extract_link(message, type_o_request):
         custom_file_name = None
 
     elif message.text is not None:
-        if message.text.lower().startswith("magnet:"):
-            url = message.text.strip()
+        #if message.text.lower().startswith("magnet:"):
+        #    url = message.text.strip()
             
            
             
-        elif message.text.lower().endswith(".torrent") or ".torrent" in message.text:
+        if message.text.lower().endswith(".torrent") or ".torrent" in message.text:
             torr = message.text.strip()
             LOGGER.info(message.text)
             path = ""
@@ -66,11 +66,11 @@ async def extract_link(message, type_o_request):
                 youtube_dl_username = url_parts[2]
                 youtube_dl_password = url_parts[3] 
         
-        elif message.entities is not None:
-            url = extract_url_from_entity(message.entities, message.text)
+        #elif message.entities is not None:
+        #    url = extract_url_from_entity(message.entities, message.text)
 
-        #else:
-         #   url = message.text.strip()
+        else:
+            url = message.text.strip()
 
     elif message.document is not None:
         if message.document.file_name.lower().endswith(".torrent"):
