@@ -52,7 +52,7 @@ async def incoming_purge_message_f(client, message):
 async def incoming_message_f(client, message):
     """/leech command or /gleech command"""
     user_command = message.command[0]
-    m_sgra = " ".join(message.command[1:])
+    LOGGER.info(user_command")
     g_id = message.from_user.id
     credit = await message.reply_text(
         f"🧲 Leeching for you <a href='tg://user?id={g_id}'>🤕</a>", parse_mode="html"
@@ -83,67 +83,45 @@ async def incoming_message_f(client, message):
         # create download directory, if not exist
         if not os.path.isdir(new_download_location):
             os.makedirs(new_download_location)
-        if "_" in m_sgra:
-            await i_m_sefg.edit_text("trying to download")
-            is_zip = False
-            is_cloud = False
-            is_unzip = False            
-            # try to download the "link"
-            sagtus, err_message = await fake_etairporpa_call(
-                aria_i_p,
-                dl_url,
-                new_download_location,
-                i_m_sefg,
-                is_zip,
-                cf_name,
-                is_cloud,
-                is_unzip,
-                message,
-                client,
-            )
-            if not sagtus:
-                # if FAILED, display the error message
-                await i_m_sefg.edit_text(err_message)
-        else:            
-            await i_m_sefg.edit_text("trying to download")
-            # try to download the "link"
-            is_zip = False
-            is_cloud = False
-            is_unzip = False
+        await i_m_sefg.edit_text("trying to download")
+        # try to download the "link"
+        is_zip = False
+        is_cloud = False
+        is_unzip = False
 
-            if user_command == LEECH_UNZIP_COMMAND.lower():
-                is_unzip = True
-            elif user_command == LEECH_ZIP_COMMAND.lower():
-                is_zip = True
-    
-            if user_command == GLEECH_COMMAND.lower():
-                is_cloud = True
-            if user_command == GLEECH_UNZIP_COMMAND.lower():
-                is_cloud = True
-                is_unzip = True
-            elif user_command == GLEECH_ZIP_COMMAND.lower():
-                is_cloud = True
-                is_zip = True
-            sagtus, err_message = await call_apropriate_function(
-                aria_i_p,
-                dl_url,
-                new_download_location,
-                i_m_sefg,
-                is_zip,
-                cf_name,
-                is_cloud,
-                is_unzip,
-                message,
-                client,
-            )
-            if not sagtus:
-                # if FAILED, display the error message
-                await i_m_sefg.edit_text(err_message)
-        #else:
-        #    await i_m_sefg.edit_text(
-        #        "**FCUK**! wat have you entered. \nPlease read /help \n"
-        #        f"<b>API Error</b>: {cf_name}"
-         #   )
+        if user_command == LEECH_UNZIP_COMMAND.lower():
+            is_unzip = True
+        elif user_command == LEECH_ZIP_COMMAND.lower():
+            is_zip = True
+
+        if user_command == GLEECH_COMMAND.lower():
+            is_cloud = True
+        if user_command == GLEECH_UNZIP_COMMAND.lower():
+            is_cloud = True
+            is_unzip = True
+        elif user_command == GLEECH_ZIP_COMMAND.lower():
+            is_cloud = True
+            is_zip = True
+        sagtus, err_message = await call_apropriate_function(
+            aria_i_p,
+            dl_url,
+            new_download_location,
+            i_m_sefg,
+            is_zip,
+            cf_name,
+            is_cloud,
+            is_unzip,
+            message,
+            client,
+        )
+        if not sagtus:
+            # if FAILED, display the error message
+            await i_m_sefg.edit_text(err_message)
+    else:
+        await i_m_sefg.edit_text(
+            "**FCUK**! wat have you entered. \nPlease read /help \n"
+            f"<b>API Error</b>: {cf_name}"
+        )
 
 
 async def incoming_youtube_dl_f(client, message):
