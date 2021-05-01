@@ -20,7 +20,7 @@ __config = {
 async def aria_start():
     cmd = ["aria2c",
           "--enable-rpc"]
-    cmd.append(f"--{__config}")
+    cmd.append("--conf-path=/app/apic.conf")
     LOGGER.info(cmd)
     process = await asyncio.create_subprocess_exec(
         *cmd,
