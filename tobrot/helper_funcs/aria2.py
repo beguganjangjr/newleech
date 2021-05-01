@@ -23,28 +23,22 @@ class aria2(aria2p.API):
     def __init__(self, config={}):
         self.__config.update(config)
 
-
-    async def aria_start(self):
-        
-        if not self.__process:
-            cmd = [
-                "aria2c",
-                "--enable-rpc"
-            ]
-            for key in self.__config:
-                cmd.append(f"--{key}={self.__config[key]}")
-            LOGGER.info(cmd)
-            self.__process = await asyncio.create_subprocess_exec(
-                *cmd,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE
+async def aria_start():
+    cmd = []
+    for key in self.__config:
+        cmd.append(f"--{key}={self.__config[key]}")
+        LOGGER.info(cmd)
+        process = await asyncio.create_subprocess_exec(
+            *cmd,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
+        )
+        stdout, stderr = await self.__process.communicate()
+        LOGGER.info(stderr or stdout)
+        aria2 = aria2p.API(
+            aria2p.Client(
+                host="http://localhost",
+                port=int(self.__config['rpc-listen-port'])
             )
-            stdout, stderr = await self.__process.communicate()
-            LOGGER.info(stderr or stdout)
-            aria2 = aria2p.API(
-                aria2p.Client(
-                    host="http://localhost",
-                    port=int(self.__config['rpc-listen-port'])
-                )
-            )
-            return aria2
+        )
+        return aria2
