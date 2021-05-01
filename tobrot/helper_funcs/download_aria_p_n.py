@@ -90,7 +90,7 @@ def add_download(aria_instance, text_url, c_file_name):
 
     
 async def call_apropriate_function(
-    aria_instance,
+    #aria_instance,
     incoming_link,
     c_file_name,
     sent_message_to_update_tg_p,
