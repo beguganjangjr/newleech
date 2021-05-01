@@ -1,5 +1,8 @@
 import asyncio
 import aria2p
+import logging
+
+LOGGER = logging.getLogger(__name__)
 
 class aria2(aria2p.API):
     __api =  None
