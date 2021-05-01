@@ -21,12 +21,12 @@ from tobrot.helper_funcs.upload_to_tg import upload_to_tg
 from tobrot.helper_funcs import aria2
 from tobrot import DOWNLOAD_LOCATION
 download_dir = DOWNLOAD_LOCATION
-STATUS.ARIA2_API = aria2.aria2(
+aria2_api = aria2.aria2(
     config={
         'dir' : download_dir
     }
 )
-aria2_api = STATUS.ARIA2_API
+
 
 async def status_message_f(client, message):
     aria_i_p = await aria2_api.start()
