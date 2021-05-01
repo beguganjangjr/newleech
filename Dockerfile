@@ -9,9 +9,9 @@ RUN pip3 install -q --ignore-installed distlib pipenv
 RUN python3 -m venv /app/venv
 
 ENV PATH="/app/venv/bin:$PATH" VIRTUAL_ENV="/app/venv"
-
+RUN /torapp/venv/bin/python3 -m pip install --upgrade pip
 COPY requirements.txt .
-RUN pip3 install -q -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 
 FROM alpine:latest as execute
