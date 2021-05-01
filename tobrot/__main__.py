@@ -78,7 +78,7 @@ app = Client(
    workers=343,
 )
 app.add_handler(
-    incoming_message_handler(
+    MessageHandler(
         incoming_message_f,
         filters=filters.command(
             [
@@ -95,7 +95,7 @@ app.add_handler(
 )    
 #
 app.add_handler(
-    incoming_telegram_download_handler(
+    MessageHandler(
         down_load_media_f,
         filters=filters.command(
             [
@@ -110,7 +110,7 @@ app.add_handler(
                              
     #
 app.add_handler(
-    incoming_purge_message_handler(
+    MessageHandler(
         incoming_purge_message_f,
         filters=filters.command(
             ["purge"]
@@ -120,7 +120,7 @@ app.add_handler(
 )    
     #
 app.add_handler(
-    incoming_g_clear_handler(
+    MessageHandler(
         g_clearme,
         filters=filters.command(
             [f"{RENEWME_COMMAND}"]
@@ -133,7 +133,7 @@ app.add_handler(
     #
 
 app.add_handler(
-    status_message_handler(
+    MessageHandler(
         status_message_f,
         filters=filters.command(
             [f"{STATUS_COMMAND}"]
@@ -146,7 +146,7 @@ app.add_handler(
     
     #
 app.add_handler(
-    cancel_message_handler(
+    MessageHandler(
         cancel_message_f,
         filters=filters.command(
             [f"{CANCEL_COMMAND_G}"]
