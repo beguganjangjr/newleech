@@ -65,10 +65,10 @@ from tobrot.plugins.status_message_fn import (
     upload_log_file,
 )
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     # create download directory, if not exist
-    if not os.path.isdir(DOWNLOAD_LOCATION):
-        os.makedirs(DOWNLOAD_LOCATION)
+#if not os.path.isdir(DOWNLOAD_LOCATION):
+#os.makedirs(DOWNLOAD_LOCATION)
     #
     app = Client(
         "LeechBot",
@@ -225,4 +225,5 @@ if __name__ == "__main__":
     )
     app.add_handler(rclone_config_handler)
     #
+if __name__ == "__main__":
     app.run()
