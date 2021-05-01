@@ -102,11 +102,17 @@ async def call_apropriate_function(
     client,
 ):
     download_dir = DOWNLOAD_LOCATION
-    aria2_api = aria2.aria2(
-        config={
-            'dir' : download_dir
-        }
-    )
+    aria2_api = aria2p.API(
+        aria2p.Client(
+            host="http://localhost",
+            port=6800,
+            secret="",
+        )    
+    )        
+      #  config={
+      #      'dir' : download_dir
+       # }
+    #)
     await aria2_api.start()
     if incoming_link.lower().startswith("magnet:"):
         sagtus, err_message = add_download(aria2_api, incoming_link, c_file_name)
