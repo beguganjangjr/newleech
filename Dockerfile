@@ -13,7 +13,7 @@ RUN python3 -m venv /app/venv
 ENV PATH="/app/venv/bin:$PATH" VIRTUAL_ENV="/app/venv"
 RUN /app/venv/bin/python3 -m pip install --upgrade pip
 COPY requirements.txt .
-RUN pip3 install -r requirements.txt
+RUN pip3 install -q -r requirements.txt
 
 
 FROM alpine:latest as execute
@@ -23,7 +23,7 @@ ENV PATH="/app/venv/bin:$PATH" VIRTUAL_ENV="/app/venv"
 
 RUN apk --no-cache -q add \
     python3 libffi \
-    ffmpeg
+    ffmpeg bash wget curl
 COPY --from=prepare_env /app/venv venv
 
 #COPY . .
@@ -36,6 +36,6 @@ COPY start.sh extract extract /app/
 
 COPY tobrot tobrot
 
-#RUN apk del .build-deps
+RUN apk del wget curl
 RUN chmod +x extract
 CMD ["bash","start.sh"]
