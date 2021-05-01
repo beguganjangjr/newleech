@@ -71,7 +71,7 @@ def add_url(aria_instance, text_url, c_file_name):
 def add_download(aria_instance, text_url, c_file_name):
     uris = [text_url]
     LOGGER.info(uris)
-    LOGGER.info(aria_instance)
+    #LOGGER.info(aria_instance)
     LOGGER.info(c_file_name)
     try:
         download = aria_instance.add_uris(uris, options={
@@ -90,7 +90,7 @@ def add_download(aria_instance, text_url, c_file_name):
 
     
 async def call_apropriate_function(
-    #aria_instance,
+    aria_instance,
     incoming_link,
     c_file_name,
     sent_message_to_update_tg_p,
@@ -101,14 +101,7 @@ async def call_apropriate_function(
     user_message,
     client,
 ):
-    download_dir = DOWNLOAD_LOCATION
-    aria2_api = None or aria2.aria2(
-        config={
-            'dir' : download_dir
-        }
-    )
-    aria_instance = aria2_api
-    await aria_instance.start()
+
     if incoming_link.lower().startswith("magnet:"):
         sagtus, err_message = add_download(aria_instance, incoming_link, c_file_name)
     elif incoming_link.lower().endswith(".torrent"):
