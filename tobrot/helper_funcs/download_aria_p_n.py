@@ -32,12 +32,6 @@ from tobrot.helper_funcs.exceptions import DirectDownloadLinkException
 from tobrot.helper_funcs import aria2
 sys.setrecursionlimit(10 ** 4)
 
-download_dir = DOWNLOAD_LOCATION
-aria2_api = aria2.aria2(
-    config={
-        'dir' : download_dir
-    }
-)    
 
 
 
@@ -74,13 +68,13 @@ def add_url(aria_instance, text_url, c_file_name):
     else:
         return True, "" + download.gid + ""
 
-def add_download(aria_instance, text_url, c_file_name):
+def add_download(aria2_api, text_url, c_file_name):
     uris = [text_url]
     LOGGER.info(uris)
-    LOGGER.info(aria_instance)
+    LOGGER.info(aria2_api)
     LOGGER.info(c_file_name)
     try:
-        download = aria_instance.add_uris(uris, options={
+        download = aria2_api.add_uris(uris, options={
             'continue_downloads' : True
             #'out': c_file_name
         })    
@@ -107,7 +101,19 @@ async def call_apropriate_function(
     user_message,
     client,
 ):
-    sagtus, err_message = add_download(aria_instance, incoming_link, c_file_name)
+    download_dir = DOWNLOAD_LOCATION
+    aria2_api = aria2.aria2(
+        config={
+            'dir' : download_dir
+        }
+    )
+    await aria2_api.start()
+    if incoming_link.lower().startswith("magnet:"):
+        sagtus, err_message = add_download(aria2_api, incoming_link, c_file_name)
+    elif incoming_link.lower().endswith(".torrent"):
+        sagtus, err_message = add_download(aria2_api, incoming_link)
+    else:
+        sagtus, err_message = add_download(aria2_api, incoming_link, c_file_name)
     if not sagtus:
         return sagtus, err_message
     LOGGER.info(err_message)
