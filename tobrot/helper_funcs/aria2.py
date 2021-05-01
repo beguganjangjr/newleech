@@ -23,7 +23,9 @@ class aria2(aria2p.API):
     def __init__(self, config={}):
         self.__config.update(config)
 
-    async def start(self):
+
+    async def aria_start(self):
+        
         if not self.__process:
             cmd = [
                 "aria2c",
@@ -39,10 +41,10 @@ class aria2(aria2p.API):
             )
             stdout, stderr = await self.__process.communicate()
             LOGGER.info(stderr or stdout)
-        if not self.__api:
-            self.__api = aria2p.API(
+            aria2 = aria2p.API(
                 aria2p.Client(
                     host="http://localhost",
                     port=int(self.__config['rpc-listen-port'])
                 )
             )
+            return aria2
