@@ -33,43 +33,6 @@ from tobrot.helper_funcs.exceptions import DirectDownloadLinkException
 sys.setrecursionlimit(10 ** 4)
 
 
-async def aria_start():
-    aria2_daemon_start_cmd = []
-    # start the daemon, aria2c command
-    aria2_daemon_start_cmd.append("aria2c")
-    aria2_daemon_start_cmd.append("--allow-overwrite=true")
-    aria2_daemon_start_cmd.append("--daemon=true")
-    # aria2_daemon_start_cmd.append(f"--dir={DOWNLOAD_LOCATION}")
-    # TODO: this does not work, need to investigate this.
-    # but for now, https://t.me/TrollVoiceBot?start=858
-    aria2_daemon_start_cmd.append("--enable-rpc")
-    aria2_daemon_start_cmd.append("--follow-torrent=mem")
-    aria2_daemon_start_cmd.append("--max-connection-per-server=10")
-    aria2_daemon_start_cmd.append("--min-split-size=10M")
-    aria2_daemon_start_cmd.append("--rpc-listen-all=false")
-    aria2_daemon_start_cmd.append(f"--rpc-listen-port={ARIA_TWO_STARTED_PORT}")
-    aria2_daemon_start_cmd.append("--rpc-max-request-size=1024M")
-    aria2_daemon_start_cmd.append("--seed-time=0")
-    aria2_daemon_start_cmd.append("--max-overall-upload-limit=1K")
-    aria2_daemon_start_cmd.append("--split=10")
-    aria2_daemon_start_cmd.append(
-        f"--bt-stop-timeout={MAX_TIME_TO_WAIT_FOR_TORRENTS_TO_START}"
-    )
-    #
-    LOGGER.info(aria2_daemon_start_cmd)
-    #
-    process = await asyncio.create_subprocess_exec(
-        *aria2_daemon_start_cmd,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-    )
-    stdout, stderr = await process.communicate()
-    LOGGER.info(stdout)
-    LOGGER.info(stderr)
-    aria2 = aria2p.API(
-        aria2p.Client(host="http://localhost", port=ARIA_TWO_STARTED_PORT, secret="")
-    )
-    return aria2
 
 
 def add_magnet(aria_instance, magnetic_link, c_file_name):
