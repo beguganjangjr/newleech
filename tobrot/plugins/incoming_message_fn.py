@@ -26,10 +26,11 @@ from tobrot.helper_funcs.admin_check import AdminCheck
 from tobrot.helper_funcs.cloneHelper import CloneHelper
 from tobrot.helper_funcs.download import download_tg
 from tobrot.helper_funcs.download_aria_p_n import (
-    aria_start,
+    #aria_start,
     call_apropriate_function,
 )
 from tobrot.helper_funcs import aria2
+from tobrot.helper_funcs.aria2 import aria_start
 from tobrot.helper_funcs.download_from_link import request_download
 from tobrot.helper_funcs.extract_link_from_message import extract_link
 from tobrot.helper_funcs.upload_to_tg import upload_to_tg
