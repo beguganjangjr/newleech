@@ -115,6 +115,7 @@ UPLOAD_COMMAND = os.environ.get("UPLOAD_COMMAND", "upload")
 RENEWME_COMMAND = os.environ.get("RENEWME_COMMAND", "renewme")
 BOT_START_TIME = time.time()
 ARGUMENTS = os.environ.get("ARGUMENTS", "--drive-chunk-size=64M --local-no-check-updated  --ignore-existing --ignore-checksum")
+ARIA_CONF = os.environ.get("ARIA_CONF")
 # dict to control uploading and downloading
 gDict = defaultdict(lambda: [])
 # user settings dict #ToDo
