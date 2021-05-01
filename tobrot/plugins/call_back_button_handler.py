@@ -9,12 +9,17 @@ import shutil
 from pyrogram.types import CallbackQuery
 from tobrot import AUTH_CHANNEL, MAX_MESSAGE_LENGTH, LOGGER, gDict
 from tobrot.helper_funcs.admin_check import AdminCheck
-from tobrot.helper_funcs.download_aria_p_n import aria_start
+#from tobrot.helper_funcs.download_aria_p_n import aria_start
 from tobrot.helper_funcs.youtube_dl_button import youtube_dl_call_back
 from tobrot.plugins.choose_rclone_config import rclone_button_callback
 from tobrot.plugins.status_message_fn import cancel_message_f
 from tobrot.helper_funcs.display_progress import Progress
-
+STATUS.ARIA2_API = aria2.aria2(
+    config={
+        'dir' : download_dir
+    }
+)    
+aria2_api = STATUS.ARIA2_API
 
 async def button(bot, update: CallbackQuery):
     cb_data = update.data
@@ -59,7 +64,7 @@ async def button(bot, update: CallbackQuery):
                 i_m_s_e_g = await update.message.reply_to_message.reply_text(
                     "checking..?", quote=True
                 )
-                aria_i_p = await aria_start()
+                aria_i_p = await aria2_api.start()
                 g_id = cb_data.split()[-1]
                 LOGGER.info(g_id)
                 try:
