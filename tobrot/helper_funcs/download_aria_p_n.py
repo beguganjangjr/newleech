@@ -38,7 +38,7 @@ aria2_api = aria2.aria2(
         'dir' : download_dir
     }
 )    
-
+await aria2_api.start()
 
 
 
