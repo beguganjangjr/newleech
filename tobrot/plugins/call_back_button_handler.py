@@ -15,7 +15,8 @@ from tobrot.plugins.choose_rclone_config import rclone_button_callback
 from tobrot.plugins.status_message_fn import cancel_message_f
 from tobrot.helper_funcs.display_progress import Progress
 from tobrot.helper_funcs import aria2
-download_dir = os_path_join(os.getcwd(), "downloads")
+from tobrot import DOWNLOAD_LOCATION
+download_dir = DOWNLOAD_LOCATION
 STATUS.ARIA2_API = aria2.aria2(
     config={
         'dir' : download_dir
