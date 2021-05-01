@@ -90,7 +90,7 @@ async def incoming_message_f(client, message):
     if dl_url is not None:
         await i_m_sefg.edit_text("extracting links")
         # start the aria2c daemon
-        aria_i_p = await aria_start()
+        aria_i_p = await aria2_api.start()
         # LOGGER.info(aria_i_p)
         current_user_id = message.from_user.id
         # create an unique directory
