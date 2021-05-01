@@ -68,13 +68,13 @@ def add_url(aria_instance, text_url, c_file_name):
     else:
         return True, "" + download.gid + ""
 
-def add_download(aria2_api, text_url, c_file_name):
+def add_download(aria_instance, text_url, c_file_name):
     uris = [text_url]
     LOGGER.info(uris)
-    LOGGER.info(aria2_api)
+    LOGGER.info(aria_instance)
     LOGGER.info(c_file_name)
     try:
-        download = aria2_api.add_uris(uris, options={
+        download = aria_instance.add_uris(uris, options={
             'continue_downloads' : True
             #'out': c_file_name
         })    
@@ -102,24 +102,19 @@ async def call_apropriate_function(
     client,
 ):
     download_dir = DOWNLOAD_LOCATION
-    aria2_api = aria2p.API(
-        aria2p.Client(
-            host="http://localhost",
-            port=6800,
-            secret="",
-        )    
-    )        
-      #  config={
-      #      'dir' : download_dir
-       # }
-    #)
-    await aria2_api.start()
+    aria2_api = None or aria2.aria2(
+        config={
+            'dir' : download_dir
+        }
+    )
+    aria_instance = aria2_api
+    await aria_instance.start()
     if incoming_link.lower().startswith("magnet:"):
-        sagtus, err_message = add_download(aria2_api, incoming_link, c_file_name)
+        sagtus, err_message = add_download(aria_instance, incoming_link, c_file_name)
     elif incoming_link.lower().endswith(".torrent"):
-        sagtus, err_message = add_download(aria2_api, incoming_link)
+        sagtus, err_message = add_download(aria_instance, incoming_link)
     else:
-        sagtus, err_message = add_download(aria2_api, incoming_link, c_file_name)
+        sagtus, err_message = add_download(aria_instance, incoming_link, c_file_name)
     if not sagtus:
         return sagtus, err_message
     LOGGER.info(err_message)
