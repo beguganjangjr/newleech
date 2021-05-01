@@ -1,25 +1,23 @@
 import asyncio
 import aria2p
 import logging
-
+import os
+from pathlib import Path
 LOGGER = logging.getLogger(__name__)
-__config = {
-    "dir" : "downloads",
-    "daemon" : "true",
-    "max-connection-per-server" : "16",
-    "max-overall-upload-limit" : "1K",
-    "max-concurrent-downloads" : "3",
-    "bt-max-peers" : "0",
-    "rpc-listen-all" : "false",
-    "rpc-listen-port": "6800",
-    "seed-ratio" : "0",
-    "seed-time" : "0.01"
-}
+
 
 
 async def aria_start():
     cmd = ["aria2c",
           "--enable-rpc"]
+    if not os.path.exists("apic.conf"):
+        with open("apic.conf", "w+", newline="\n", encoding="utf-8") as fole:
+            fole.write(f"{aria_conf}")
+    if os.path.exists("apic.conf"):
+         with open("apic.conf", "r+") as file:
+                con = file.read()
+                gUP = re.findall("\[(.*)\]", con)[0]
+                LOGGER.info(gUP)
     cmd.append("--conf-path=/app/apic.conf")
     LOGGER.info(cmd)
     process = await asyncio.create_subprocess_exec(
