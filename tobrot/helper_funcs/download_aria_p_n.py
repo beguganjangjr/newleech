@@ -110,7 +110,22 @@ def add_url(aria_instance, text_url, c_file_name):
     else:
         return True, "" + download.gid + ""
 
+def add_download(aria_instance, text_url, c_file_name):
+    uris = [text_url]
+    try:
+        #download = aria_instance.add_magnet(magnetic_link, options=options)
+        download = aria_instance.add_uris(uris, options={
+            'continue_downloads' : True
+        })    
+    except Exception as e:
+        return (
+            False,
+            "**FAILED** \n" + str(e) + " \nPlease do not send SLOW links. Read /help",
+        )
+    else:
+        return True, "" + download.gid + ""
 
+    
 async def call_apropriate_function(
     aria_instance,
     incoming_link,
@@ -123,12 +138,10 @@ async def call_apropriate_function(
     user_message,
     client,
 ):
-    if incoming_link.lower().startswith("magnet:"):
-        sagtus, err_message = add_magnet(aria_instance, incoming_link, c_file_name)
-    elif incoming_link.lower().endswith(".torrent"):
-        sagtus, err_message = add_torrent(aria_instance, incoming_link)
+    if incoming_link is not None:
+        sagtus, err_message = add_download(aria_instance, incoming_link, c_file_name)
     else:
-        sagtus, err_message = add_url(aria_instance, incoming_link, c_file_name)
+        LOGGER.info(incoming_link)
     if not sagtus:
         return sagtus, err_message
     LOGGER.info(err_message)
