@@ -15,13 +15,9 @@ from tobrot.plugins.choose_rclone_config import rclone_button_callback
 from tobrot.plugins.status_message_fn import cancel_message_f
 from tobrot.helper_funcs.display_progress import Progress
 from tobrot.helper_funcs import aria2
+from tobrot.helper_funcs.aria2 import aria_start
 from tobrot import DOWNLOAD_LOCATION
-download_dir = DOWNLOAD_LOCATION
-aria2_api = aria2.aria2(
-    config={
-        'dir' : download_dir
-    }
-)    
+
 #aria2_api = STATUS.ARIA2_API
 
 async def button(bot, update: CallbackQuery):
@@ -67,7 +63,7 @@ async def button(bot, update: CallbackQuery):
                 i_m_s_e_g = await update.message.reply_to_message.reply_text(
                     "checking..?", quote=True
                 )
-                aria_i_p = await aria2_api.start()
+                aria_i_p = await aria_start()
                 g_id = cb_data.split()[-1]
                 LOGGER.info(g_id)
                 try:
