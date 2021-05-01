@@ -15,11 +15,7 @@ async def aria_start():
     if not os.path.exists("apic.conf"):
         with open("apic.conf", "w+", newline="\n", encoding="utf-8") as fole:
             fole.write(f"{ARIA_CONF}")
-    if os.path.exists("apic.conf"):
-         with open("apic.conf", "r+") as file:
-                con = file.read()
-                gUP = re.findall("\[(.*)\]", con)[0]
-                LOGGER.info(gUP)
+
     cmd.append("--conf-path=/app/apic.conf")
     LOGGER.info(cmd)
     process = await asyncio.create_subprocess_exec(
