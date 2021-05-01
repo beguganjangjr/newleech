@@ -4,14 +4,13 @@ WORKDIR /app
 RUN apk --no-cache -q add \
     python3 python3-dev py3-pip libffi libffi-dev musl-dev gcc \
     build-base zlib-dev jpeg-dev libxml2-dev libxslt-dev \
-    cargo openssl-dev
-    
-
-RUN pip3 install -q --ignore-installed distlib pipenv
-RUN python3 -m venv /app/venv
+    cargo openssl-dev \
+    && pip3 install -q --ignore-installed distlib pipenv \
+    && python3 -m venv /app/venv
 
 ENV PATH="/app/venv/bin:$PATH" VIRTUAL_ENV="/app/venv"
 RUN /app/venv/bin/python3 -m pip install --upgrade pip
+
 COPY requirements.txt .
 RUN pip3 install -q -r requirements.txt
 
@@ -36,6 +35,6 @@ COPY start.sh extract extract /app/
 
 COPY tobrot tobrot
 
-RUN apk del wget curl
-RUN chmod +x extract
+RUN apk del wget curl \
+    && chmod +x extract
 CMD ["bash","start.sh"]
