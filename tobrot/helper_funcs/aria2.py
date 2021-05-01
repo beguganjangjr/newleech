@@ -11,7 +11,7 @@ LOGGER = logging.getLogger(__name__)
 
 async def aria_start():
     cmd = ["aria2c",
-          "--enable-rpc"]
+          "--enable-rpc=true"]
     if not os.path.exists("apic.conf"):
         with open("apic.conf", "w+", newline="\n", encoding="utf-8") as fole:
             fole.write(f"{ARIA_CONF}")
