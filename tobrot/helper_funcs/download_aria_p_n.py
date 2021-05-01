@@ -35,48 +35,7 @@ sys.setrecursionlimit(10 ** 4)
 
 
 
-def add_magnet(aria_instance, magnetic_link, c_file_name):
-    options = None
-    # if c_file_name is not None:
-    #     options = {
-    #         "dir": c_file_name
-    #     }
-    try:
-        download = aria_instance.add_magnet(magnetic_link, options=options)
-    except Exception as e:
-        return (
-            False,
-            "**FAILED** \n" + str(e) + " \nPlease do not send SLOW links. Read /help",
-        )
-    else:
-        return True, "" + download.gid + ""
 
-
-def add_torrent(aria_instance, torrent_file_path):
-    if torrent_file_path is None:
-        return (
-            False,
-            "**FAILED** \n"
-            + str(e)
-            + " \nsomething wrongings when trying to add <u>TORRENT</u> file",
-        )
-    if os.path.exists(torrent_file_path):
-        # Add Torrent Into Queue
-        try:
-            download = aria_instance.add_torrent(
-                torrent_file_path, uris=None, options=None, position=None
-            )
-        except Exception as e:
-            return (
-                False,
-                "**FAILED** \n"
-                + str(e)
-                + " \nPlease do not send SLOW links. Read /help",
-            )
-        else:
-            return True, "" + download.gid + ""
-    else:
-        return False, "**FAILED** \nPlease try other sources to get workable link"
 
 
 def add_url(aria_instance, text_url, c_file_name):
@@ -112,6 +71,7 @@ def add_url(aria_instance, text_url, c_file_name):
 
 def add_download(aria_instance, text_url, c_file_name):
     uris = [text_url]
+    LOGGER.info(uris)
     try:
         #download = aria_instance.add_magnet(magnetic_link, options=options)
         download = aria_instance.add_uris(uris, options={
@@ -120,7 +80,7 @@ def add_download(aria_instance, text_url, c_file_name):
     except Exception as e:
         return (
             False,
-            "**FAILED** \n" + str(e) + " \nPlease do not send SLOW links. Read /help",
+            "**FAILED** \n" + str(e) + " \n ERROR",
         )
     else:
         return True, "" + download.gid + ""
@@ -138,10 +98,7 @@ async def call_apropriate_function(
     user_message,
     client,
 ):
-    if incoming_link is not None:
-        sagtus, err_message = add_download(aria_instance, incoming_link, c_file_name)
-    else:
-        LOGGER.info(incoming_link)
+    sagtus, err_message = add_download(aria_instance, incoming_link, c_file_name)
     if not sagtus:
         return sagtus, err_message
     LOGGER.info(err_message)
