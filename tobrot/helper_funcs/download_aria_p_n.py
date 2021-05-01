@@ -81,7 +81,10 @@ def add_download(aria_instance, text_url, c_file_name):
     LOGGER.info(aria_instance)
     LOGGER.info(c_file_name)
     try:
-        download = aria2_api.add_uris(uris, options=options)
+        download = aria2_api.add_uris(link, options={
+            'continue_downloads' : True
+            #'out': c_file_name
+        })    
         #download = aria_instance.add_uris(uris, options=options)
         
     except Exception as e:
