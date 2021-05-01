@@ -74,13 +74,13 @@ def add_url(aria_instance, text_url, c_file_name):
     else:
         return True, "" + download.gid + ""
 
-def add_download(aria_i_p , text_url, c_file_name):
+def add_download(aria_instance, text_url, c_file_name):
     uris = [text_url]
     LOGGER.info(uris)
     LOGGER.info(aria_instance)
     LOGGER.info(c_file_name)
     try:
-        download = aria_i_p .add_uris(uris, options={
+        download = aria_instance.add_uris(uris, options={
             'continue_downloads' : True
             #'out': c_file_name
         })    
@@ -96,7 +96,7 @@ def add_download(aria_i_p , text_url, c_file_name):
 
     
 async def call_apropriate_function(
-    aria_i_p ,
+    aria_instance ,
     incoming_link,
     c_file_name,
     sent_message_to_update_tg_p,
@@ -107,7 +107,7 @@ async def call_apropriate_function(
     user_message,
     client,
 ):
-    sagtus, err_message = add_download(aria_i_p , incoming_link, c_file_name)
+    sagtus, err_message = add_download(aria_instance, incoming_link, c_file_name)
     if not sagtus:
         return sagtus, err_message
     LOGGER.info(err_message)
