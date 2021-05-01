@@ -72,11 +72,12 @@ def add_url(aria_instance, text_url, c_file_name):
 def add_download(aria_instance, text_url, c_file_name):
     uris = [text_url]
     LOGGER.info(uris)
+    LOGGER.info(aria_instance)
+    LOGGER.info(c_file_name)
     try:
         #download = aria_instance.add_magnet(magnetic_link, options=options)
-        download = aria_instance.add_uris(uris, options={
-            'continue_downloads' : True
-        })    
+        download = aria_instance.add_uris(uris, options=options)
+        
     except Exception as e:
         return (
             False,
