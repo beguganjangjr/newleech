@@ -18,14 +18,14 @@ from tobrot.helper_funcs.admin_check import AdminCheck
 from tobrot.helper_funcs.display_progress import TimeFormatter, humanbytes
 from tobrot.helper_funcs.download_aria_p_n import call_apropriate_function
 from tobrot.helper_funcs.upload_to_tg import upload_to_tg
-from tobrot.helper_funcs import aria2
 from tobrot.helper_funcs.aria2 import aria_start
+#from tobrot.helper_funcs.aria2 import aria_start
 from tobrot import DOWNLOAD_LOCATION
 
 
 
 async def status_message_f(client, message):
-    aria_i_p = await aria.start()
+    aria_i_p = await aria_start()
     # Show All Downloads
     downloads = aria_i_p.get_downloads()
     #
