@@ -17,12 +17,12 @@ from tobrot.helper_funcs.display_progress import Progress
 from tobrot.helper_funcs import aria2
 from tobrot import DOWNLOAD_LOCATION
 download_dir = DOWNLOAD_LOCATION
-STATUS.ARIA2_API = aria2.aria2(
+aria2_api = aria2.aria2(
     config={
         'dir' : download_dir
     }
 )    
-aria2_api = STATUS.ARIA2_API
+#aria2_api = STATUS.ARIA2_API
 
 async def button(bot, update: CallbackQuery):
     cb_data = update.data
