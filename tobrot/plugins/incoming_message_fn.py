@@ -35,6 +35,8 @@ from tobrot.helper_funcs.extract_link_from_message import extract_link
 from tobrot.helper_funcs.upload_to_tg import upload_to_tg
 from tobrot.helper_funcs.youtube_dl_extractor import extract_youtube_dl_formats
 from tobrot.helper_funcs.ytplaylist import yt_playlist_downg
+download_dir = os_path_join(os.getcwd(), "downloads")
+
 STATUS.ARIA2_API = aria2.aria2(
     config={
         'dir' : download_dir
