@@ -26,7 +26,7 @@ from tobrot.helper_funcs.admin_check import AdminCheck
 from tobrot.helper_funcs.cloneHelper import CloneHelper
 from tobrot.helper_funcs.download import download_tg
 from tobrot.helper_funcs.download_aria_p_n import (
-    #aria_start,
+    aria_start,
     call_apropriate_function,
 )
 from tobrot.helper_funcs import aria2
@@ -85,7 +85,7 @@ async def incoming_message_f(client, message):
     if dl_url is not None:
         await i_m_sefg.edit_text("extracting links")
         # start the aria2c daemon
-        #aria_i_p = await aria2_api.start()
+        aria_i_p = await aria_start()
         # LOGGER.info(aria_i_p)
         current_user_id = message.from_user.id
         # create an unique directory
@@ -115,7 +115,7 @@ async def incoming_message_f(client, message):
             is_cloud = True
             is_zip = True
         sagtus, err_message = await call_apropriate_function(
-            #aria_i_p,
+            aria_i_p,
             dl_url,
             new_download_location,
             i_m_sefg,
