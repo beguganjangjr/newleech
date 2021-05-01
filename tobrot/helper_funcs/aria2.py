@@ -2,6 +2,7 @@ import asyncio
 import aria2p
 import logging
 import os
+import re
 from pathlib import Path
 from tobrot import ARIA_CONF
 LOGGER = logging.getLogger(__name__)
