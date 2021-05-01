@@ -36,12 +36,7 @@ from tobrot.helper_funcs.upload_to_tg import upload_to_tg
 from tobrot.helper_funcs.youtube_dl_extractor import extract_youtube_dl_formats
 from tobrot.helper_funcs.ytplaylist import yt_playlist_downg
 from tobrot import DOWNLOAD_LOCATION
-download_dir = DOWNLOAD_LOCATION
-aria2_api = aria2.aria2(
-    config={
-        'dir' : download_dir
-    }
-)    
+
 
 async def incoming_purge_message_f(client, message):
     """/purge command"""
@@ -90,7 +85,7 @@ async def incoming_message_f(client, message):
     if dl_url is not None:
         await i_m_sefg.edit_text("extracting links")
         # start the aria2c daemon
-        aria_i_p = await aria2_api.start()
+        #aria_i_p = await aria2_api.start()
         # LOGGER.info(aria_i_p)
         current_user_id = message.from_user.id
         # create an unique directory
@@ -120,7 +115,7 @@ async def incoming_message_f(client, message):
             is_cloud = True
             is_zip = True
         sagtus, err_message = await call_apropriate_function(
-            aria_i_p,
+            #aria_i_p,
             dl_url,
             new_download_location,
             i_m_sefg,
