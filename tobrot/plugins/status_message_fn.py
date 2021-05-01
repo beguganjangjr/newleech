@@ -16,12 +16,19 @@ from tobrot.helper_funcs.admin_check import AdminCheck
 
 # the logging things
 from tobrot.helper_funcs.display_progress import TimeFormatter, humanbytes
-from tobrot.helper_funcs.download_aria_p_n import aria_start, call_apropriate_function
+from tobrot.helper_funcs.download_aria_p_n import call_apropriate_function
 from tobrot.helper_funcs.upload_to_tg import upload_to_tg
-
+from tobrot.helper_funcs import aria2
+download_dir = os_path_join(os.getcwd(), downloads)
+STATUS.ARIA2_API = aria2.aria2(
+    config={
+        'dir' : download_dir
+    }
+)
+aria2_api = STATUS.ARIA2_API
 
 async def status_message_f(client, message):
-    aria_i_p = await aria_start()
+    aria_i_p = await aria2_api.start()
     # Show All Downloads
     downloads = aria_i_p.get_downloads()
     #
