@@ -7,9 +7,7 @@ tgcrypto
 youtube_dl
 hurry.filesize
 python-dotenv
-beautifulsoup4>=4.8.2,<4.8.10
-bs4
-lxml
+beautifulsoup4
 requests
 messages
 js2py
