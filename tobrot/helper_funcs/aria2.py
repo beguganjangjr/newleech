@@ -3,6 +3,7 @@ import aria2p
 import logging
 import os
 from pathlib import Path
+from tobrot import ARIA_CONF
 LOGGER = logging.getLogger(__name__)
 
 
@@ -12,7 +13,7 @@ async def aria_start():
           "--enable-rpc"]
     if not os.path.exists("apic.conf"):
         with open("apic.conf", "w+", newline="\n", encoding="utf-8") as fole:
-            fole.write(f"{aria_conf}")
+            fole.write(f"{ARIA_CONF}")
     if os.path.exists("apic.conf"):
          with open("apic.conf", "r+") as file:
                 con = file.read()
