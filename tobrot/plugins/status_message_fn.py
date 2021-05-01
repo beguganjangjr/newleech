@@ -19,7 +19,7 @@ from tobrot.helper_funcs.display_progress import TimeFormatter, humanbytes
 from tobrot.helper_funcs.download_aria_p_n import call_apropriate_function
 from tobrot.helper_funcs.upload_to_tg import upload_to_tg
 from tobrot.helper_funcs import aria2
-download_dir = os_path_join(os.getcwd(), downloads)
+download_dir = os_path_join(os.getcwd(), "downloads")
 STATUS.ARIA2_API = aria2.aria2(
     config={
         'dir' : download_dir
