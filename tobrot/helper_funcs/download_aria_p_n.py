@@ -29,9 +29,15 @@ from tobrot.helper_funcs.extract_link_from_message import extract_link
 from tobrot.helper_funcs.upload_to_tg import upload_to_gdrive, upload_to_tg
 from tobrot.helper_funcs.direct_link_generator import direct_link_generator
 from tobrot.helper_funcs.exceptions import DirectDownloadLinkException
-
+from tobrot.helper_funcs import aria2
 sys.setrecursionlimit(10 ** 4)
 
+download_dir = DOWNLOAD_LOCATION
+aria2_api = aria2.aria2(
+    config={
+        'dir' : download_dir
+    }
+)    
 
 
 
@@ -75,8 +81,8 @@ def add_download(aria_instance, text_url, c_file_name):
     LOGGER.info(aria_instance)
     LOGGER.info(c_file_name)
     try:
-        #download = aria_instance.add_magnet(magnetic_link, options=options)
-        download = aria_instance.add_uris(uris, options=options)
+        download = aria2_api.add_uris(uris, options=options)
+        #download = aria_instance.add_uris(uris, options=options)
         
     except Exception as e:
         return (
