@@ -35,7 +35,7 @@ async def aria_start():
             conf_txt = line.read()
             print(conf_txt)
             LOGGER.info(conf_txt)
-            #cmd.append("--conf-path=/app/apic.conf")
+            cmd.append("--conf-path=apic.conf")
 #            print(important)
             
     LOGGER.info(cmd)
