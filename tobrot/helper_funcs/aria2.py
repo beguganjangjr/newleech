@@ -30,11 +30,8 @@ async def aria_start():
         with open("apic.conf", "w+", newline="\n") as fole:
             fole.write(f"{ARIA_CONF}")            
             line = fole.read()
-            if not line:
-                LOGGER.info("Not Line")
-            else:
-                print(line)
-                LOGGER.info(line)
+            print(line)
+            LOGGER.info(line)
             #cmd.append("--conf-path=/app/apic.conf")
 #            print(important)
             
