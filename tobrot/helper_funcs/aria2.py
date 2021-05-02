@@ -12,6 +12,7 @@ LOGGER = logging.getLogger(__name__)
 resp = requests.get('https://trackerslist.com/best_aria2.txt')
 conf = None
 xyza = f"{ARIA_CONF}"
+loop = asyncio.get_event_loop()
 
 
    
@@ -50,10 +51,6 @@ async def aria_start():
     )
     stdout, stderr = await process.communicate()
     LOGGER.info(stderr or stdout)
-    aria2 = aria2p.API(
-        aria2p.Client(
-            host="http://localhost",
-            port=6800
-        )
-    )
+    arcli = await loop.create_task(loop.run_in_executor(None, partial(aria2p.Client, host="http://localhost", port=6800, secret="")))
+    aria2 = await loop.create_task(loop.run_in_executor(None, aria2p.API, arcli)  
     return aria2
