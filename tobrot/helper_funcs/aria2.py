@@ -41,9 +41,10 @@ async def aria_start():
       else:
          conf = conf + "\nbt-tracker=" + resp.text + "\n"
          
-      print(conf)
+      #print(conf)
       with open("apic.conf", "w+") as f:
          f.write(conf)
+         cmd.append("--conf-path=apic.conf")
     else:
       cmd.append(f"--bt-tracker={resp.text}")
       
