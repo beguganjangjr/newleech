@@ -36,7 +36,7 @@ async def aria_start():
             print(conf)
             LOGGER.info(conf)
             
-            if "bt-tracker" in conf_txt:
+            if "bt-tracker" in conf:
                 conf = re.sub("bt-tracker=.*?", "bt-tracker=" + resp.text, conf)
             else:
                 conf = conf + "\nbt-tracker=" + resp.text + "\n"
