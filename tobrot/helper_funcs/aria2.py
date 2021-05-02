@@ -7,16 +7,29 @@ from pathlib import Path
 from tobrot import ARIA_CONF
 LOGGER = logging.getLogger(__name__)
 
+trackers_list = get(
+    "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt"
+).text.replace("\n\n", ",")
+trackers = f"[{trackers_list}]"
 
 
 async def aria_start():
-    cmd = ["aria2c",
-          "--enable-rpc=true"]
+    cmd = [
+        "aria2c",
+        "--enable-rpc"
+        ]
+    cmd.append("--daemon=true")
+    cmd.append("--follow-torrent=mem")
+    cmd.append("--max-connection-per-server=10")
+    cmd.append("--rpc-listen-all=false")
+    cmd.append("--rpc-listen-port=6800")
+    cmd.append("--seed-time=0")
+    cmd.append(f"--bt-tracker={trackers}")
     if not os.path.exists("apic.conf"):
         with open("apic.conf", "w+", newline="\n", encoding="utf-8") as fole:
             fole.write(f"{ARIA_CONF}")
-
-    cmd.append("--conf-path=/app/apic.conf")
+            cmd.append("--conf-path=/app/apic.conf")
+            
     LOGGER.info(cmd)
     process = await asyncio.create_subprocess_exec(
         *cmd,
