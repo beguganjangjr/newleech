@@ -65,7 +65,7 @@ async def add_torrent(aria_instance, torrent_file_path):
 async def add_download(aria_instance, text_url, c_file_name):
     
     #uris = [text_url]
-    LOGGER.info(uris)
+    #LOGGER.info(uris)
     #LOGGER.info(aria_instance)
     LOGGER.info(c_file_name)
     if "zippyshare.com" in text_url \
