@@ -30,7 +30,7 @@ from tobrot.helper_funcs.download_aria_p_n import (
     call_apropriate_function,
 )
 from tobrot.helper_funcs import aria2
-from tobrot.helper_funcs.aria2 import aria_start
+from tobrot.helper_funcs.aria2 import aria_start, init_start
 from tobrot.helper_funcs.download_from_link import request_download
 from tobrot.helper_funcs.extract_link_from_message import extract_link
 from tobrot.helper_funcs.upload_to_tg import upload_to_tg
@@ -86,7 +86,7 @@ async def incoming_message_f(client, message):
     if dl_url is not None:
         await i_m_sefg.edit_text("extracting links")
         # start the aria2c daemon
-        aria_i_p = await aria_start()
+        aria_i_p = await init_start()
         # LOGGER.info(aria_i_p)
         current_user_id = message.from_user.id
         # create an unique directory
