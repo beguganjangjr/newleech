@@ -61,12 +61,13 @@ async def add_torrent(aria_instance, torrent_file_path):
         return False, "**FAILED** \nPlease try other sources to get workable link"
 
 
-def add_url(aria_instance, text_url, c_file_name):
-    options = None
-    # if c_file_name is not None:
-    #     options = {
-    #         "dir": c_file_name
-    #     }
+
+async def add_download(aria_instance, text_url, c_file_name):
+    
+    #uris = [text_url]
+    LOGGER.info(uris)
+    #LOGGER.info(aria_instance)
+    LOGGER.info(c_file_name)
     if "zippyshare.com" in text_url \
         or "osdn.net" in text_url \
         or "mediafire.com" in text_url \
@@ -80,23 +81,7 @@ def add_url(aria_instance, text_url, c_file_name):
             except DirectDownloadLinkException as e:
                 LOGGER.info(f'{text_url}: {e}')
     else:
-        uris = [text_url]
-    # Add URL Into Queue
-    try:
-        download = aria_instance.add_uris(uris, options=options)
-    except Exception as e:
-        return (
-            False,
-            "**FAILED** \n" + str(e) + " \nPlease do not send SLOW links. Read /help",
-        )
-    else:
-        return True, "" + download.gid + ""
-
-async def add_download(aria_instance, text_url, c_file_name):
-    uris = [text_url]
-    LOGGER.info(uris)
-    #LOGGER.info(aria_instance)
-    LOGGER.info(c_file_name)
+        uris = [text_url]    
     try:
         download = await loop.run_in_executor(None, partial(aria_instance.add_uris, uris, options={
             'continue_downloads' : True
