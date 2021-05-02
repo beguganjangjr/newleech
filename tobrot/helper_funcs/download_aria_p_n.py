@@ -37,20 +37,29 @@ loop = asyncio.get_event_loop()
 
 async def add_torrent(aria_instance, torrent_file_path):
     if torrent_file_path is None:
-        return False, "**FAILED** \n\nsomething wrongings when trying to add <u>TORRENT</u> file"
+        return (
+            False,
+            "**FAILED** \n"
+            + str(e)
+            + " \nsomething wrongings when trying to add <u>TORRENT</u> file",
+        )
     if os.path.exists(torrent_file_path):
         # Add Torrent Into Queue
         try:
-
-            download = await loop.run_in_executor(None, partial(aria_instance.add_torrent, torrent_file_path, uris=None, options=None, position=None))
-
-
+            download = aria_instance.add_torrent(
+                torrent_file_path, uris=None, options=None, position=None
+            )
         except Exception as e:
-            return False, "**FAILED** \n" + " \nPlease do not send SLOW links. Read /help"
+            return (
+                False,
+                "**FAILED** \n"
+                + str(e)
+                + " \nPlease do not send SLOW links. Read /help",
+            )
         else:
             return True, "" + download.gid + ""
     else:
-        return False, "**FAILED** \n" + str(e) + " \nPlease try other sources to get workable link"
+        return False, "**FAILED** \nPlease try other sources to get workable link"
 
 
 def add_url(aria_instance, text_url, c_file_name):
