@@ -58,7 +58,7 @@ async def upload_to_tg(
     edit_media=False,
     yt_thumb=None,
 ):
-    base_file_name = os.path.basename(local_file_name
+    base_file_name = os.path.basename(local_file_name)
     LOGGER.info(base_file_name)                                  
     caption_str = ""
     caption_str += "<code>"
