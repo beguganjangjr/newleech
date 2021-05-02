@@ -34,8 +34,7 @@ from functools import partial
 sys.setrecursionlimit(10 ** 4)
 loop = asyncio.get_event_loop()
 
-
-def add_torrent(aria_instance, torrent_file_path):
+async def add_torrent(aria_instance, torrent_file_path):
     if torrent_file_path is None:
         return (
             False,
@@ -46,7 +45,7 @@ def add_torrent(aria_instance, torrent_file_path):
     if os.path.exists(torrent_file_path):
         # Add Torrent Into Queue
         try:
-            download = aria_instance.add_torrent(
+            download = await loop.run_in_executor(None, partial(aria_instance.add_torrent,
                 torrent_file_path, uris=None, options=None, position=None
             )
         except Exception as e:
