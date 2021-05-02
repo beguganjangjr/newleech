@@ -17,7 +17,7 @@ trackers = f"[{trackers_list}]"
 async def aria_start():
     cmd = [
         "aria2c",
-        "--enable-rpc"
+        "--enable-rpc=true"
         ]
     cmd.append("--daemon=true")
     cmd.append("--follow-torrent=mem")
@@ -27,9 +27,15 @@ async def aria_start():
     cmd.append("--seed-time=0")
     cmd.append(f"--bt-tracker={trackers}")
     if not os.path.exists("apic.conf"):
-        with open("apic.conf", "w+", newline="\n", encoding="utf-8") as fole:
+        with open("apic.conf", "rw+", newline="\n", encoding="utf-8") as fole:
             fole.write(f"{ARIA_CONF}")
-            cmd.append("--conf-path=/app/apic.conf")
+            line = fole.readline()
+            if not line:
+                LOGGER.info("Not Line")
+            else:
+                LOGGER.info(line)
+            #cmd.append("--conf-path=/app/apic.conf")
+#            print(important)
             
     LOGGER.info(cmd)
     process = await asyncio.create_subprocess_exec(
