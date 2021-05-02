@@ -8,7 +8,7 @@ from requests import get
 from pathlib import Path
 from tobrot import ARIA_CONF
 LOGGER = logging.getLogger(__name__)
-
+from functools import partial
 resp = requests.get('https://trackerslist.com/best_aria2.txt')
 conf = None
 xyza = f"{ARIA_CONF}"
@@ -53,7 +53,7 @@ async def aria_start():
     LOGGER.info(stderr or stdout)
     #arcli = await loop.create_task(loop.run_in_executor(None, partial(aria2p.Client, host="http://localhost", port=6800, secret="")))
     #aria2 = await loop.create_task(loop.run_in_executor(None, aria2p.API, arcli)  
-    arcli = await loop.run_in_executor(None (aria2p.Client, host="http://localhost", port=6800, secret=""))
+    arcli = await loop.run_in_executor(None, partial(aria2p.Client, host="http://localhost", port=6800, secret=""))
     aria2 = await loop.run_in_executor(None, aria2p.API, arcli)  
    
    
