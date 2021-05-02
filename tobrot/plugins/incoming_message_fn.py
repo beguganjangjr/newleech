@@ -67,17 +67,17 @@ async def incoming_message_f(client, message):
         LOGGER.info(cf_name)
     elif len(message.command) == 2:
         link = message.command[1]
-        #if link.lower().endswith(".torrent"):
-        #    dl_url = ""
-        #    async with aiohttp.ClientSession() as sess:
-        #        async with sess.get(link) as resp:
-        #            if resp.status == 200:
-        #                dl_url = str(time.time()).replace(".","")+".torrent"
-        #                with open(dl_url, "wb") as fi:
-        #                    fi.write(await resp.read())
-        #else:
-        #    dl_url = link
-        dl_url = link
+        if link.lower().endswith(".torrent"):
+            dl_url = ""
+            async with aiohttp.ClientSession() as sess:
+                async with sess.get(link) as resp:
+                    if resp.status == 200:
+                        dl_url = str(time.time()).replace(".","")+".torrent"
+                        with open(dl_url, "wb") as fi:
+                            fi.write(await resp.read())
+        else:
+            dl_url = link
+        #dl_url = link
         LOGGER.info(dl_url)
         cf_name = None
     else:
