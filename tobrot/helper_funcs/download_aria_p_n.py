@@ -30,11 +30,26 @@ from tobrot.helper_funcs.upload_to_tg import upload_to_gdrive, upload_to_tg
 from tobrot.helper_funcs.direct_link_generator import direct_link_generator
 from tobrot.helper_funcs.exceptions import DirectDownloadLinkException
 from tobrot.helper_funcs import aria2
+from functools import partial
 sys.setrecursionlimit(10 ** 4)
+loop = asyncio.get_event_loop()
 
 
+async def add_torrent(aria_instance, torrent_file_path):
+    if torrent_file_path is None:
+        return False, "**FAILED** \n\nsomething wrongings when trying to add <u>TORRENT</u> file"
+    if os.path.exists(torrent_file_path):
+        # Add Torrent Into Queue
+        try:
 
+            download = await loop.run_in_executor(None, partial(aria_instance.add_torrent, torrent_file_path, uris=None, options=None, position=None))
 
+        except Exception as e:
+            return False, "**FAILED** \n" + str(e) + " \nPlease do not send SLOW links. Read /help"
+        else:
+            return True, "" + download.gid + ""
+    else:
+        return False, "**FAILED** \n" + str(e) + " \nPlease try other sources to get workable link"
 
 
 def add_url(aria_instance, text_url, c_file_name):
@@ -68,16 +83,16 @@ def add_url(aria_instance, text_url, c_file_name):
     else:
         return True, "" + download.gid + ""
 
-def add_download(aria_instance, text_url, c_file_name):
+async def add_download(aria_instance, text_url, c_file_name):
     uris = [text_url]
     LOGGER.info(uris)
     #LOGGER.info(aria_instance)
     LOGGER.info(c_file_name)
     try:
-        download = aria_instance.add_uris(uris, options={
+        download = await loop.run_in_executor(None, partial(aria_instance.add_uris, uris, options={
             'continue_downloads' : True
             #'out': c_file_name
-        })    
+        }))    
         #download = aria_instance.add_uris(uris, options=options)
         
     except Exception as e:
@@ -101,7 +116,10 @@ async def call_apropriate_function(
     user_message,
     client,
 ):
-    sagtus, err_message = add_download(aria_instance, incoming_link, c_file_name)
+    if incoming_link.lower().endswith(".torrent"):
+        sagtus, err_message = await add_torrent(aria_instance, incoming_link, c_file_name)
+    else:
+        sagtus, err_message = await add_download(aria_instance, incoming_link, c_file_name)
     if not sagtus:
         return sagtus, err_message
     LOGGER.info(err_message)
