@@ -35,7 +35,7 @@ sys.setrecursionlimit(10 ** 4)
 loop = asyncio.get_event_loop()
 
 
-async def add_torrent(aria_instance, torrent_file_path):
+def add_torrent(aria_instance, torrent_file_path):
     if torrent_file_path is None:
         return (
             False,
@@ -127,7 +127,7 @@ async def call_apropriate_function(
     client,
 ):
     if incoming_link.lower().endswith(".torrent"):
-        sagtus, err_message = await add_torrent(aria_instance, incoming_link)
+        sagtus, err_message = add_torrent(aria_instance, incoming_link)
     else:
         sagtus, err_message = await add_download(aria_instance, incoming_link, c_file_name)
     if not sagtus:
