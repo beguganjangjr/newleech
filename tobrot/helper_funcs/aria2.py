@@ -27,11 +27,12 @@ async def aria_start():
     cmd.append("--seed-time=0")
     cmd.append(f"--bt-tracker={trackers}")
     if not os.path.exists("apic.conf"):
-        with open("apic.conf", "w+", newline="\n") as fole:
-            fole.write(f"{ARIA_CONF}")            
-            line = fole.read()
-            print(line)
-            LOGGER.info(line)
+        with open("apic.conf", "w+", newline="\n", encoding="utf-8") as fole:
+            fole.write(f"{ARIA_CONF}")  
+            line = open("apic.conf", "r", encoding="utf-8")
+            conf_txt = line.read()
+            print(conf_txt)
+            LOGGER.info(conf_txt)
             #cmd.append("--conf-path=/app/apic.conf")
 #            print(important)
             
