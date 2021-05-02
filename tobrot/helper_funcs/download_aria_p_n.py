@@ -47,7 +47,7 @@ async def add_torrent(aria_instance, torrent_file_path):
         try:
             download = await loop.run_in_executor(None, partial(aria_instance.add_torrent,
                 torrent_file_path, uris=None, options=None, position=None
-            )
+            ))
         except Exception as e:
             return (
                 False,
