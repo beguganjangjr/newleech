@@ -101,13 +101,7 @@ async def call_apropriate_function(
     user_message,
     client,
 ):
-
-    if incoming_link.lower().startswith("magnet:"):
-        sagtus, err_message = add_download(aria_instance, incoming_link, c_file_name)
-    elif incoming_link.lower().endswith(".torrent"):
-        sagtus, err_message = add_download(aria_instance, incoming_link)
-    else:
-        sagtus, err_message = add_download(aria_instance, incoming_link, c_file_name)
+    sagtus, err_message = add_download(aria_instance, incoming_link, c_file_name)
     if not sagtus:
         return sagtus, err_message
     LOGGER.info(err_message)
