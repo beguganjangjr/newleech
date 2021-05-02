@@ -64,7 +64,7 @@ async def upload_to_tg(
     caption_str += "<code>"
     caption_str += base_file_name
     caption_str += "</code>"
-    #if os.path.isdir(local_file_name):
+    if os.path.isdir(local_file_name):
     #    test = os.listdir(local_file_name)
     #    for item in test:
     #        if item.endswith(".nfo"):
