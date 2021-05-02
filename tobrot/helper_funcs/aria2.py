@@ -3,6 +3,7 @@ import aria2p
 import logging
 import os
 import re
+import requests
 from requests import get
 from pathlib import Path
 from tobrot import ARIA_CONF
