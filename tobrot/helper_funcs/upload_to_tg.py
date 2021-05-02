@@ -58,16 +58,17 @@ async def upload_to_tg(
     edit_media=False,
     yt_thumb=None,
 ):
-    base_file_name = os.path.basename(local_file_name)
+    base_file_name = os.path.basename(local_file_name
+    LOGGER.info(base_file_name)                                  
     caption_str = ""
     caption_str += "<code>"
     caption_str += base_file_name
     caption_str += "</code>"
-    if os.path.isdir(local_file_name):
-        test = os.listdir(local_file_name)
-        for item in test:
-            if item.endswith(".nfo"):
-                os.remove(os.path.join(./DOWNLOADS, item))
+    #if os.path.isdir(local_file_name):
+    #    test = os.listdir(local_file_name)
+    #    for item in test:
+    #        if item.endswith(".nfo"):
+    #            os.remove(os.path.join(./DOWNLOADS, item))
         directory_contents = os.listdir(local_file_name)    
         directory_contents.sort()
         # number_of_files = len(directory_contents)
