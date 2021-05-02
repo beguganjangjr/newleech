@@ -7,7 +7,7 @@ import logging
 import os
 import sys
 import traceback
-
+import asyncio
 from pyrogram import Client, filters
 from pyrogram.handlers import CallbackQueryHandler, MessageHandler
 
@@ -159,5 +159,11 @@ app.add_handler(
     #
 
     #
-if __name__ == "__main__":
-    app.run()
+if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    loop.create_task(app.start())
+    try:
+        loop.run_forever()
+    except (KeyboardInterrupt, SystemExit):
+        loop.run_until_complete(app.stop())
+        loop.close()
