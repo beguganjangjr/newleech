@@ -53,7 +53,7 @@ async def aria_start():
     LOGGER.info(stderr or stdout)
     #arcli = await loop.create_task(loop.run_in_executor(None, partial(aria2p.Client, host="http://localhost", port=6800, secret="")))
     #aria2 = await loop.create_task(loop.run_in_executor(None, aria2p.API, arcli)  
-    arcli = await loop.run_in_executor(None, partial(aria2p.Client, host="http://localhost", port=6800, secret=""))
+    arcli = await loop.run_in_executor(None (aria2p.Client, host="http://localhost", port=6800, secret=""))
     aria2 = await loop.run_in_executor(None, aria2p.API, arcli)  
    
    
