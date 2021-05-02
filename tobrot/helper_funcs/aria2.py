@@ -12,7 +12,9 @@ trackers_list = get(
     "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt"
 ).text.replace("\n\n", ",")
 trackers = f"[{trackers_list}]"
+xyza = f"{ARIA_CONF}"
 
+LOGGER.info(xyza)
 
 async def aria_start():
     cmd = [
@@ -28,7 +30,7 @@ async def aria_start():
     cmd.append(f"--bt-tracker={trackers}")
     if not os.path.exists("apic.conf"):
         with open("apic.conf", "w+", newline="\n", encoding="utf-8") as fole:
-            fole.write(f"{ARIA_CONF}")  
+            fole.write(xyza)  
             line = open("apic.conf", "r", encoding="utf-8")
             conf_txt = line.read()
             print(conf_txt)
