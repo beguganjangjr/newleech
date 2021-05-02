@@ -117,7 +117,7 @@ async def call_apropriate_function(
     client,
 ):
     if incoming_link.lower().endswith(".torrent"):
-        sagtus, err_message = await add_torrent(aria_instance, incoming_link, c_file_name)
+        sagtus, err_message = await add_torrent(aria_instance, incoming_link)
     else:
         sagtus, err_message = await add_download(aria_instance, incoming_link, c_file_name)
     if not sagtus:
