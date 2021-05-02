@@ -11,7 +11,7 @@ LOGGER = logging.getLogger(__name__)
 from functools import partial
 
 loop = asyncio.get_event_loop()
-
+resp = requests.get('https://trackerslist.com/best_aria2.txt')
 
    
 async def aria_start():
@@ -29,20 +29,25 @@ async def aria_start():
     #conf = None
     if not os.path.exists("apic.conf"):
         with open("apic.conf", "w+", newline="\n", encoding="utf-8") as fole:
-            resp = requests.get('https://trackerslist.com/best_aria2.txt')
-            fole.write(f"{ARIA_CONF}")  
-            line = open("apic.conf", "r", encoding="utf-8")
-            conf = line.read()
-            print(conf)
-            LOGGER.info(conf)
             
-            if "bt-tracker" in conf:
-                conf = re.sub("bt-tracker=.*?", "bt-tracker=" + resp.text, conf)
-            else:
-                conf = conf + "\nbt-tracker=" + resp.text + "\n"
-#            print(important)
+            fole.write(f"{ARIA_CONF}")  
             cmd.append("--conf-path=apic.conf")
             
+    elif os.path.exists("apic.conf"):
+      with open("apic.conf", "r") as f:
+         conf = f.read()        
+      if "bt-tracker" in conf:
+         conf = re.sub("bt-tracker=.*?", "bt-tracker=" + resp.text, conf)
+      else:
+         conf = conf + "\nbt-tracker=" + resp.text + "\n"
+         
+      print(conf)
+      with open("apic.conf", "w+") as f:
+         f.write(conf)
+    else:
+      cmd.append(f"--bt-tracker={resp.text}")
+      
+      
     LOGGER.info(cmd)
     process = await asyncio.create_subprocess_exec(
         *cmd,
