@@ -66,10 +66,11 @@ async def upload_to_tg(
     caption_str += "<code>"
     caption_str += base_file_name
     caption_str += "</code>"
+    ext = ['.nfo','.exe']
     if os.path.isdir(local_file_name):
         test = os.listdir(local_file_name)
         for item in test:
-            if item.endswith(".nfo"):
+            if any(item.endswith(s) for s in ext) and os.path.getsize(item) < int(1024000):
                 os.remove(os.path.join(local_file_name, item))
         directory_contents = os.listdir(local_file_name)    
         directory_contents.sort()
