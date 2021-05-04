@@ -65,18 +65,17 @@ from tobrot.plugins.status_message_fn import (
     upload_log_file,
 )
 
-#if __name__ == "__main__":
-    # create download directory, if not exist
-#if not os.path.isdir(DOWNLOAD_LOCATION):
-#os.makedirs(DOWNLOAD_LOCATION)
-    #
+
 app = Client(
-   "LeechBot",
+   ":memory:",
    bot_token=TG_BOT_TOKEN,
    api_id=APP_ID,
    api_hash=API_HASH,
-   workers=343,
+   workers=32,
 )
+app.UPDATES_WORKERS = 128
+app.DOWNLOAD_WORKERS = 128
+app.set_parse_mode("html")
 app.add_handler(
     MessageHandler(
         incoming_message_f,
@@ -117,8 +116,30 @@ app.add_handler(
         )
         & filters.chat(chats=AUTH_CHANNEL),
     )
-)    
+)
+app.add_handler(
+    MessageHandler(
+        cancel_message_f,
+        filters=filters.command([f"{CANCEL_COMMAND_G}"])
+        & filters.chat(chats=AUTH_CHANNEL),
+    )
+)
+app.add_handler(
+    MessageHandler(
+        g_yt_playlist,
+        filters=filters.command([PYTDL_COMMAND, GPYTDL_COMMAND])
+        & filters.chat(chats=AUTH_CHANNEL),
+    )
+)
+
     #
+app.add_handler(
+    MessageHandler(
+        upload_log_file,
+        filters=filters.command([f"{LOG_COMMAND}"])
+        & filters.chat(chats=AUTH_CHANNEL),
+    )
+)
 app.add_handler(
     MessageHandler(
         g_clearme,
@@ -147,13 +168,16 @@ app.add_handler(
     #
 app.add_handler(
     MessageHandler(
-        cancel_message_f,
-        filters=filters.command(
-            [f"{CANCEL_COMMAND_G}"]
-        )
-        & filters.chat(chats=AUTH_CHANNEL),
+        help_message_f,,
+        filters=filters.chat(chats=AUTH_CHANNEL) & filters.new_chat_members,
     )
-)    
+app.add_handler(
+    CallbackQueryHandler(button)
+    )
+app.add_handler(
+    MessageHandler(
+        rclone_command_f,,
+        filters=filters.command(["rclone"]) & filters.chat(chats=AUTH_CHANNEL),
 
 
     #
