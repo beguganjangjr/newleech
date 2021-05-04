@@ -78,11 +78,12 @@ async def incoming_message_f(client, message):
         else:
             dl_url = link
         #dl_url = link
-        LOGGER.info(dl_url)
+        
         cf_name = None
     else:
         await i_m_sefg.edit("😔 No downloading source provided 🙄")
         return
+    LOGGER.info(dl_url)
     if dl_url is not None:
         await i_m_sefg.edit_text("extracting links")
         # start the aria2c daemon
