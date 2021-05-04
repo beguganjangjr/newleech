@@ -4,7 +4,7 @@
 
 import logging
 import asyncio
-import aiohttp
+import time, aiohttp
 from pyrogram.types import MessageEntity
 from tobrot import TG_OFFENSIVE_API, LOGGER
 
