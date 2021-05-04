@@ -28,21 +28,21 @@ async def aria_start():
     #cmd.append(f"--bt-tracker={trackers}")
     #conf = None
       
-    if os.path.exists("aria2c.conf"):
-      with open("aria2c.conf", "r") as f:
+    if os.path.exists("epic.conf"):
+      with open("epic.conf", "r") as f:
          conf = f.read()        
          if "bt-tracker" in conf:
             conf = re.sub("bt-tracker=.*?", "bt-tracker=" + resp.text, conf)
          else:
             conf = conf + "\nbt-tracker=" + resp.text + "\n"
       #print(conf)
-         with open("aria2c.conf", "w+") as f:
+         with open("epic.conf", "w+") as f:
             f.write(conf)
-            cmd.append("--conf-path=aria2c.conf")         
-    elif not os.path.exists("aria2c.conf"):
+            cmd.append("--conf-path=epic.conf")         
+    elif not os.path.exists("epic.conf"):
         with open("aria2c.conf", "w+", newline="\n", encoding="utf-8") as f:
             f.write(f"{ARIA_CONF}")  
-            cmd.append("--conf-path=aria2c.conf")
+            cmd.append("--conf-path=epic.conf")
     else:
       cmd.append(f"--bt-tracker={resp.text}")
 
