@@ -65,6 +65,14 @@ from tobrot.plugins.status_message_fn import (
     upload_log_file,
 )
 
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logging.getLogger("pyrogram").setLevel(logging.WARNING)
+logging.getLogger("asyncio").setLevel(logging.WARNING)
+logging.getLogger("urllib3").setLevel(logging.WARNING)
+LOGGER = logging.getLogger(__name__)
 
 app = Client(
    ":memory:",
