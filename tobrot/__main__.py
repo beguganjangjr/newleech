@@ -168,7 +168,7 @@ app.add_handler(
     #
 app.add_handler(
     MessageHandler(
-        help_message_f,,
+        help_message_f,
         filters=filters.chat(chats=AUTH_CHANNEL) & filters.new_chat_members,
     )
 app.add_handler(
