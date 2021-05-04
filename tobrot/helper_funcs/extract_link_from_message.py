@@ -4,7 +4,7 @@
 
 import logging
 
-import aiohttp, time
+import aiohttp
 from pyrogram.types import MessageEntity
 from tobrot import TG_OFFENSIVE_API, LOGGER
 
@@ -34,24 +34,7 @@ async def extract_link(message, type_o_request):
     elif message.text is not None:
         if message.text.lower().startswith("magnet:"):
             url = message.text.strip()
-            
-           
-            
-        if message.text.lower().endswith(".torrent") or ".torrent" in message.text:
-            torr = message.text.strip()
-            LOGGER.info(message.text)
-            url = ""
-            async with aiohttp.ClientSession() as sess:
-                async with sess.get(torr) as resp:
-                    if resp.status == 200:
-                        url = str(time.time()).replace(".","")+".torrent"
-                        LOGGER.info(url)
-                        with open(url, "wb") as fi:
-                            fi.write(await resp.read())
-                            #url = await fi.write(await resp.read()).download()
-            
 
-                
         elif "|" in message.text:
             url_parts = message.text.split("|")
             if len(url_parts) == 2:
@@ -61,8 +44,8 @@ async def extract_link(message, type_o_request):
                 url = url_parts[0]
                 custom_file_name = url_parts[1]
                 youtube_dl_username = url_parts[2]
-                youtube_dl_password = url_parts[3] 
-        
+                youtube_dl_password = url_parts[3]
+
         elif message.entities is not None:
             url = extract_url_from_entity(message.entities, message.text)
 
