@@ -171,15 +171,17 @@ app.add_handler(
         help_message_f,
         filters=filters.chat(chats=AUTH_CHANNEL) & filters.new_chat_members,
     )
+)    
 app.add_handler(
     CallbackQueryHandler(button)
     )
+)
 app.add_handler(
     MessageHandler(
-        rclone_command_f,,
+        rclone_command_f,
         filters=filters.command(["rclone"]) & filters.chat(chats=AUTH_CHANNEL),
-
-
+    )
+)    
     #
 
     #
