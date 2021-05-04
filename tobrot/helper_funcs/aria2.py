@@ -40,9 +40,8 @@ async def aria_start():
          f.write(conf)
          cmd.append("--conf-path=apic.conf")         
     elif not os.path.exists("apic.conf"):
-        with open("apic.conf", "w+", newline="\n", encoding="utf-8") as fole:
-            
-            fole.write(f"{ARIA_CONF}")  
+        with open("apic.conf", "w+", newline="\n", encoding="utf-8") as f:
+            f.write(f"{ARIA_CONF}")  
             cmd.append("--conf-path=apic.conf")
             
 
@@ -51,7 +50,10 @@ async def aria_start():
     else:
       cmd.append(f"--bt-tracker={resp.text}")
       
-      
+    f = open('apic.conf', 'r')
+    file_contents = f.read()
+    LOGGER.info(file_contents)
+    f.close()
     LOGGER.info(cmd)
     process = await asyncio.create_subprocess_exec(
         *cmd,
