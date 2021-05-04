@@ -28,32 +28,28 @@ async def aria_start():
     #cmd.append(f"--bt-tracker={trackers}")
     #conf = None
       
-    if os.path.exists("apic.conf"):
-      with open("apic.conf", "r") as f:
+    if os.path.exists("aria2c.conf"):
+      with open("aria2c.conf", "r") as f:
          conf = f.read()        
       if "bt-tracker" in conf:
          conf = re.sub("bt-tracker=.*?", "bt-tracker=" + resp.text, conf)
       else:
          conf = conf + "\nbt-tracker=" + resp.text + "\n"
       #print(conf)
-      with open("apic.conf", "w+") as f:
+      with open("aria2c.conf", "w+") as f:
          f.write(conf)
-         cmd.append("--conf-path=apic.conf")         
-    elif not os.path.exists("apic.conf"):
-        with open("apic.conf", "w+", newline="\n", encoding="utf-8") as f:
+         cmd.append("--conf-path=aria2c.conf")         
+    elif not os.path.exists("aria2c.conf"):
+        with open("aria2c.conf", "w+", newline="\n", encoding="utf-8") as f:
             f.write(f"{ARIA_CONF}")  
-            cmd.append("--conf-path=apic.conf")
+            cmd.append("--conf-path=aria2c.conf")
             
 
          
 
     else:
       cmd.append(f"--bt-tracker={resp.text}")
-      
-    f = open('apic.conf', 'r')
-    file_contents = f.read()
-    LOGGER.info(file_contents)
-    f.close()
+
     LOGGER.info(cmd)
     process = await asyncio.create_subprocess_exec(
         *cmd,
