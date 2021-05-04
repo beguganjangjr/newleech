@@ -40,7 +40,7 @@ async def aria_start():
          f.write(conf)
          cmd.append("--conf-path=epic.conf")         
     elif not os.path.exists("epic.conf"):
-        with open("aria2c.conf", "w+", newline="\n", encoding="utf-8") as f:
+        with open("epic.conf", "w+", newline="\n", encoding="utf-8") as f:
             f.write(f"{ARIA_CONF}")  
             cmd.append("--conf-path=epic.conf")
     else:
