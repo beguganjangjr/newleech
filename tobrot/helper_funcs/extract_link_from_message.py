@@ -3,7 +3,7 @@
 # (c) Shrimadhav U K
 
 import logging
-
+import asyncio
 import aiohttp
 from pyrogram.types import MessageEntity
 from tobrot import TG_OFFENSIVE_API, LOGGER
@@ -35,7 +35,7 @@ async def extract_link(message, type_o_request):
         if message.text.lower().startswith("magnet:"):
             url = message.text.strip()
             
-        elif message.lower().endswith(".torrent"): 
+        elif message.text.lower().endswith(".torrent"): 
             link = message.text.strip()
             async with aiohttp.ClientSession() as sess:
                 async with sess.get(link) as resp:
