@@ -34,6 +34,17 @@ async def extract_link(message, type_o_request):
     elif message.text is not None:
         if message.text.lower().startswith("magnet:"):
             url = message.text.strip()
+            
+        elif message.lower().endswith(".torrent"): 
+            link = message.text.strip()
+            async with aiohttp.ClientSession() as sess:
+                async with sess.get(link) as resp:
+                    if resp.status == 200:
+                        url = str(time.time()).replace(".","")+".torrent"
+                        with open(url, "wb") as fi:
+                            fi.write(await resp.read())
+                    
+            
 
         elif "|" in message.text:
             url_parts = message.text.split("|")
