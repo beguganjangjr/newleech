@@ -27,24 +27,27 @@ async def aria_start():
     cmd.append("--seed-time=0.01")
     #cmd.append(f"--bt-tracker={trackers}")
     #conf = None
-    if not os.path.exists("apic.conf"):
-        with open("apic.conf", "w+", newline="\n", encoding="utf-8") as fole:
-            
-            fole.write(f"{ARIA_CONF}")  
-            cmd.append("--conf-path=apic.conf")
-            
-    elif os.path.exists("apic.conf"):
+      
+    if os.path.exists("apic.conf"):
       with open("apic.conf", "r") as f:
          conf = f.read()        
       if "bt-tracker" in conf:
          conf = re.sub("bt-tracker=.*?", "bt-tracker=" + resp.text, conf)
       else:
          conf = conf + "\nbt-tracker=" + resp.text + "\n"
-         
       #print(conf)
       with open("apic.conf", "w+") as f:
          f.write(conf)
-         #cmd.append("--conf-path=apic.conf")
+         cmd.append("--conf-path=apic.conf")         
+    elif not os.path.exists("apic.conf"):
+        with open("apic.conf", "w+", newline="\n", encoding="utf-8") as fole:
+            
+            fole.write(f"{ARIA_CONF}")  
+            cmd.append("--conf-path=apic.conf")
+            
+
+         
+
     else:
       cmd.append(f"--bt-tracker={resp.text}")
       
