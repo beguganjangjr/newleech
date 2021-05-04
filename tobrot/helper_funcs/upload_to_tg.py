@@ -70,7 +70,7 @@ async def upload_to_tg(
     if os.path.isdir(local_file_name):
         test = os.listdir(local_file_name)
         for item in test:
-            if any(item.endswith(s) for s in ext) and os.path.getsize(item) < int(1024000):
+            if any(item.endswith(s) for s in ext):
                 os.remove(os.path.join(local_file_name, item))
         directory_contents = os.listdir(local_file_name)    
         directory_contents.sort()
