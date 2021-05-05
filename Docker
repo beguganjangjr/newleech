@@ -12,8 +12,13 @@ RUN apk --no-cache -q add \
     build-base zlib-dev jpeg-dev libxml2-dev libxslt-dev \
     cargo openssl-dev \
     && pip3 install -q --ignore-installed distlib pipenv \
-    && python3 -m venv /app/venv
-
+    && python3 -m venv /app/venv \
+    && wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
+    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.32-r0/glibc-2.32-r0.apk && \
+    apk add glibc-2.32-r0.apk && \
+    rm /etc/apk/keys/sgerrand.rsa.pub && \
+    rm glibc-2.32-r0.apk && \
+    rm -r /var/cache/apk/APKINDEX.*
 ENV PATH="/app/venv/bin:$PATH" VIRTUAL_ENV="/app/venv"
 RUN /app/venv/bin/python3 -m pip install --upgrade pip
 
@@ -30,13 +35,8 @@ ENV PATH="/app/venv/bin:$PATH" VIRTUAL_ENV="/app/venv"
   
 RUN apk --no-cache -q add \
     python3 libffi \
-    ffmpeg bash wget curl \
-    && wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
-    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.32-r0/glibc-2.32-r0.apk && \
-    apk add glibc-2.32-r0.apk && \
-    rm /etc/apk/keys/sgerrand.rsa.pub && \
-    rm glibc-2.32-r0.apk && \
-    rm -r /var/cache/apk/APKINDEX.*
+    ffmpeg bash wget curl
+
     
 RUN mkdir -p /tmp/ && cd /tmp \
     && wget -O /tmp/rclone.zip https://github.com/xinxin8816/heroku-aria2c-21vianet/raw/master/rclone.zip \  
@@ -61,6 +61,6 @@ RUN mkdir -p /tmp/ && cd /tmp \
 COPY --from=prepare_env /app/venv venv
     
 COPY tobrot tobrot
-COPY start.sh extract /app/
+COPY start.sh extract rclone.conf /app/
 RUN chmod +x extract
 CMD ["bash","start.sh"]
