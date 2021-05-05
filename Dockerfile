@@ -1,9 +1,7 @@
 FROM beguganjang/torrentleech:latest
 
-#COPY . .
-COPY setup.sh .
-RUN bash setup.sh
-
+RUN chmod 777 /app
+RUN chmod 777 /usr/bin
 
 RUN mkdir -p /tmp/ && cd /tmp \
     && wget -O /tmp/rclone.zip https://github.com/xinxin8816/heroku-aria2c-21vianet/raw/master/rclone.zip \  
@@ -17,9 +15,9 @@ RUN mkdir -p /tmp/ && cd /tmp \
     && tar -xzvf aria.tar.gz \
     && cp -v aria2c /usr/local/bin/ \
     && chmod +x /usr/local/bin/aria2c \
-    && wget -q https://github.com/P3TERX/aria2.conf/raw/master/dht.dat
-    && wget -q https://github.com/P3TERX/aria2.conf/raw/master/dht6.dat
-    && cp -rfv dht.dat dht6.dat /app/
+    && wget -q https://github.com/P3TERX/aria2.conf/raw/master/dht.dat \ 
+    && wget -q https://github.com/P3TERX/aria2.conf/raw/master/dht6.dat \
+    && cp -rfv dht.dat dht6.dat /app/ \
     && rm -rf /tmp/* \
     && cd ~ 
     
