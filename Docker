@@ -24,7 +24,7 @@ RUN apk --no-cache -q add \
  
 
 
-ADD https://kmk.kmk.workers.dev/requirements%20%287%29.txt requirements.txt
+#ADD https://kmk.kmk.workers.dev/requirements%20%287%29.txt requirements.txt
 RUN pip3 install -q -r requirements.txt
 
 
@@ -47,8 +47,8 @@ RUN mkdir -p /tmp/ && cd /tmp \
     && rm -rf /tmp/* \
     && cd ~     
     
-
-RUN apk del .build-deps
+COPY requirements.txt .
+RUN pip3 install --no-cache -q -r requirements.txt
 COPY . .
 RUN chmod +x extract
 CMD ["bash","start.sh"]
