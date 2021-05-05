@@ -21,6 +21,7 @@ from tobrot import (
     YTDL_COMMAND,
     GPYTDL_COMMAND,
     PYTDL_COMMAND,
+    EDIT_SLEEP_TIME_OUT,
 )
 from tobrot.helper_funcs.admin_check import AdminCheck
 from tobrot.helper_funcs.cloneHelper import CloneHelper
@@ -56,6 +57,7 @@ async def incoming_message_f(client, message):
     user_command = message.command[0]
     #LOGGER.info(user_command)
     g_id = message.from_user.id
+    await asyncio.sleep(EDIT_SLEEP_TIME_OUT)
     credit = await message.reply_text(
         f"🧲 Leeching for you <a href='tg://user?id={g_id}'>🤕</a>", parse_mode="html"
     )
