@@ -201,3 +201,4 @@ if __name__ == '__main__':
     except (KeyboardInterrupt, SystemExit):
         loop.run_until_complete(app.stop())
         loop.close()
+LOGGER.info("Bot Started!")
