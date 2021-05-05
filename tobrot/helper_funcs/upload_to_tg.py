@@ -240,7 +240,7 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
         tt = os.path.join(destination, os.path.basename(file_upload))
         LOGGER.info(tt)
         t_am = [
-            "/rclone",
+            "rclone",
             "copy",
             "--config=rclone.conf",
             f"{file_upload}",
@@ -265,7 +265,7 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
             print(f"+ {g_file}/\n- *", file=filter1)
 
         g_a_u = [
-            "/rclone",
+            "rclone",
             "lsf",
             "--config=rclone.conf",
             "-F",
