@@ -67,7 +67,7 @@ async def incoming_message_f(client, message):
         LOGGER.info(cf_name)
     elif len(message.command) == 2:
         link = message.command[1]
-        if link.lower().endswith(".torrent"):
+        if link.lower().endswith(".torrent") or "/watercache.nanobytes.org/get" in link:
             dl_url = ""
             async with aiohttp.ClientSession() as sess:
                 async with sess.get(link) as resp:
