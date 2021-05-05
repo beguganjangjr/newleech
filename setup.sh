@@ -2,9 +2,9 @@
 
 wget -q https://github.com/xinxin8816/heroku-aria2c-21vianet/raw/master/rclone.zip
 unzip -q rclone.zip
-export PATH=$PWD:$PATH
-chmod 777 /app/rclone
-rm -rf rclone.zip
+cp rclone /usr/bin/
+chown root:root /usr/bin/rclone
+chmod 755 /usr/bin/rclone
 
 # Install aria2c static binary
 wget -q https://github.com/P3TERX/aria2-builder/releases/download/1.35.0_2020.09.04/aria2-1.35.0-static-linux-amd64.tar.gz
