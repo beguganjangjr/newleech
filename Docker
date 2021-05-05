@@ -1,38 +1,58 @@
-FROM ubuntu:20.04
-
-
-RUN mkdir ./app
-RUN chmod 777 ./app
+FROM alpine:edge as prepare_env
 WORKDIR /app
 
-ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=Asia/Kolkata
+RUN echo \
+  # replacing default repositories with edge ones
+  && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" > /etc/apk/repositories \
+  && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
+  && echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories 
+  
+RUN apk --no-cache -q add \
+    python3 python3-dev py3-pip libffi libffi-dev musl-dev gcc \
+    build-base zlib-dev jpeg-dev libxml2-dev libxslt-dev \
+    cargo openssl-dev \
+    && pip3 install -q --ignore-installed distlib pipenv \
+    && python3 -m venv /app/venv
 
-RUN apt -qq update --fix-missing && \
-    apt -qq install -y git \
-    aria2 \
-    wget \
-    curl \
-    busybox \
-    unzip \
-    unrar \
-    tar \
-    python3 \
-    ffmpeg \
-    python3-pip \
-    p7zip-full \
-    p7zip-rar
+ENV PATH="/app/venv/bin:$PATH" VIRTUAL_ENV="/app/venv"
+RUN /app/venv/bin/python3 -m pip install --upgrade pip
 
-COPY setup.sh .
-RUN bash setup.sh
+ADD https://kmk.kmk.workers.dev/requirements%20%287%29.txt requirements.txt
+RUN pip3 install -q -r requirements.txt
 
-RUN mkdir /app/gautam
-RUN wget -O /app/gautam/gclone.gz https://git.io/JJMSG
-RUN gzip -d /app/gautam/gclone.gz
-RUN chmod 0775 /app/gautam/gclone
 
-COPY requirements.txt .
-RUN pip3 install --no-cache-dir -r requirements.txt
+FROM alpine:edge as execute
+WORKDIR /app
+RUN chmod 777 /app
+ENV PATH="/app/venv/bin:$PATH" VIRTUAL_ENV="/app/venv"
+
+
+  
+RUN apk --no-cache -q add \
+    python3 libffi \
+    ffmpeg bash wget curl
+    
+RUN mkdir -p /tmp/ && cd /tmp \
+    && wget -O /tmp/rclone.zip https://github.com/xinxin8816/heroku-aria2c-21vianet/raw/master/rclone.zip \  
+    && unzip -q rclone.zip \
+    && mkdir -p /usr/bin \
+    && cp -v rclone /usr/bin/ \
+    && chmod 777 /usr/bin/rclone \
+    && wget -O /tmp/accounts.zip https://kmk.kmk.workers.dev/accounts.zip \
+    && unzip -q accounts.zip \
+    && cp -rf accounts /app/accounts \
+    && wget -O /tmp/aria.tar.gz https://raw.githubusercontent.com/Ncode2014/megaria/req/aria2-static-linux-amd64.tar.gz \  
+    && tar -xzvf aria.tar.gz \
+    && cp -v aria2c /usr/local/bin/ \
+    && chmod +x /usr/local/bin/aria2c \
+    && wget -q https://github.com/P3TERX/aria2.conf/raw/master/dht.dat \ 
+    && wget -q https://github.com/P3TERX/aria2.conf/raw/master/dht6.dat \
+    && cp -rfv dht.dat dht6.dat /app/ \
+    && rm -rf /tmp/* \
+    && cd ~     
+    
+
+COPY --from=prepare_env /app/venv venv
 COPY . .
 RUN chmod +x extract
 CMD ["bash","start.sh"]
