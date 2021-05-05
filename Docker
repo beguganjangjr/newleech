@@ -60,7 +60,7 @@ RUN mkdir -p /tmp/ && cd /tmp \
 
 COPY --from=prepare_env /app/venv venv
     
-
-COPY . .
+COPY tobrot tobrot
+COPY start.sh extract /app/
 RUN chmod +x extract
 CMD ["bash","start.sh"]
