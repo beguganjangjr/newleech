@@ -11,7 +11,7 @@ RUN echo \
 RUN apk --no-cache -q add \
     python3-dev libffi \
     ffmpeg bash wget curl \
-    apk --no-cache -qq add --virtual .build-deps \
+    && apk add -qq  --no-cache --virtual .build-deps \
     py3-pip libffi libffi-dev musl-dev gcc \
     build-base zlib-dev jpeg-dev libxml2-dev libxslt-dev \
     cargo openssl-dev \
