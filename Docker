@@ -59,3 +59,10 @@ RUN mkdir -p /tmp/ && cd /tmp \
     
 RUN bash <(wget -qO- https://git.io/gclone.sh)
 COPY --from=prepare_env /app/venv venv
+COPY start.sh extract rclone.conf extract /app/
+COPY tobrot tobrot
+
+RUN apk del wget curl \
+    && chmod +x extract \
+    && chmod 777 rclone.conf
+CMD ["bash","start.sh"]
