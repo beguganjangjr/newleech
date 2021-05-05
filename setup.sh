@@ -1,8 +1,7 @@
 #!/bin/bash
 
 wget -q https://github.com/xinxin8816/heroku-aria2c-21vianet/raw/master/rclone.zip
-unzip -qj rclone.zip
-cp rclone /usr/bin/
+unzip -qj rclone.zip -d /usr/bin
 chmod 777 /usr/bin/rclone
 
 # Install aria2c static binary
