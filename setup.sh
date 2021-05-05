@@ -21,3 +21,5 @@ wget -q https://github.com/P3TERX/aria2.conf/raw/master/dht6.dat
 wget -q https://kmk.kmk.workers.dev/accounts.zip
 unzip -q accounts.zip
 rm -rf accounts.zip
+
+echo $PATH > PATH
