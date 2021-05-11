@@ -194,12 +194,6 @@ app.add_handler(
 
     #
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    loop.create_task(app.run())
     LOGGER.info("Bot Started!")
-    try:
-        loop.run_forever()
-    except (KeyboardInterrupt, SystemExit):
-        loop.run_until_complete(app.stop())
-        loop.close()
+    app.run()
 
