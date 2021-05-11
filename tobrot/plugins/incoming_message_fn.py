@@ -57,11 +57,11 @@ async def incoming_message_f(client, message):
     user_command = message.command[0]
     #LOGGER.info(user_command)
     g_id = message.from_user.id
-    await asyncio.sleep(EDIT_SLEEP_TIME_OUT)
-    credit = await message.reply_text(
-        f"🧲 Leeching for you <a href='tg://user?id={g_id}'>🤕</a>", parse_mode="html"
-    )
-    i_m_sefg = await message.reply_text("processing...", quote=True)
+    #await asyncio.sleep(EDIT_SLEEP_TIME_OUT)
+    #credit = await message.reply_text(
+    #    f"🧲 Leeching for you <a href='tg://user?id={g_id}'>🤕</a>", parse_mode="html"
+    #)
+    i_m_sefg = await message.reply_text(f"🧲 Leeching for you <a href='tg://user?id={g_id}'>🤕</a>", parse_mode="html", quote=True)
     # get link from the incoming message
     if message.reply_to_message:
         dl_url, cf_name, _, _ = await extract_link(message.reply_to_message, "LEECH")
@@ -87,7 +87,7 @@ async def incoming_message_f(client, message):
         return
     LOGGER.info(dl_url)
     if dl_url is not None:
-        await i_m_sefg.edit_text("extracting links")
+        #await i_m_sefg.edit_text("extracting links")
         # start the aria2c daemon
         aria_i_p = await aria_start()
         # LOGGER.info(aria_i_p)
