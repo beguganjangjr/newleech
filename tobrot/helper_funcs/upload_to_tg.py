@@ -71,19 +71,19 @@ async def upload_to_tg(
     if os.path.isdir(local_file_name):
         test = os.listdir(local_file_name)
         for item in test:
-            if any(item.endswith(s) for s in ext) and os.path.getsize(local_file_name) < int(100 * 1024):
+            if any(item.endswith(s) for s in ext) or os.path.getsize(local_file_name) < int(10 * 1024 * 1024):
                 os.remove(os.path.join(local_file_name, item))
         directory_contents = os.listdir(local_file_name)    
         directory_contents.sort()
         # number_of_files = len(directory_contents)
         LOGGER.info(directory_contents)
         new_m_esg = message
-        if not message.photo:
-            new_m_esg = await message.reply_text(
-                f"Found {len(directory_contents)} files <a href='tg://user?id={from_user}'>🤒</a>",
-                quote=True
+        #if not message.photo:
+        #    new_m_esg = await message.reply_text(
+        #        f"Found {len(directory_contents)} files <a href='tg://user?id={from_user}'>🤒</a>",
+        #        quote=True
                 # reply_to_message_id=message.message_id
-            )
+        #    )
         for single_file in directory_contents:
             # recursion: will this FAIL somewhere?
             await upload_to_tg(
