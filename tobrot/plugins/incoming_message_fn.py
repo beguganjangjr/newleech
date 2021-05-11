@@ -63,6 +63,7 @@ async def incoming_message_f(client, message):
     #)
     i_m_sefg = await message.reply_text(f"🧲 Leeching for you <a href='tg://user?id={g_id}'>🤕</a>", parse_mode="html", quote=True)
     # get link from the incoming message
+    
     if message.reply_to_message:
         dl_url, cf_name, _, _ = await extract_link(message.reply_to_message, "LEECH")
         LOGGER.info(dl_url)
@@ -87,6 +88,7 @@ async def incoming_message_f(client, message):
         return
     LOGGER.info(dl_url)
     if dl_url is not None:
+        await asyncio.sleep(EDIT_SLEEP_TIME_OUT)
         #await i_m_sefg.edit_text("extracting links")
         # start the aria2c daemon
         aria_i_p = await aria_start()
