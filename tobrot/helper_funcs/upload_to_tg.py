@@ -79,11 +79,12 @@ async def upload_to_tg(
         LOGGER.info(directory_contents)
         new_m_esg = message
         if not message.photo:
-            new_m_esg = await message.edit_text(message +=
-                f"\nFound {len(directory_contents)} files <a href='tg://user?id={from_user}'>🤒</a>",
-                quote=True
+            new_m_esg += await message.edit_text(
+            new_m_esg = await message.edit_text(message += "test")  
+                #f"\nFound {len(directory_contents)} files <a href='tg://user?id={from_user}'>🤒</a>",
+                #quote=True
                 # reply_to_message_id=message.message_id
-            )
+            #)
         for single_file in directory_contents:
             # recursion: will this FAIL somewhere?
             await upload_to_tg(
