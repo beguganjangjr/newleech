@@ -71,8 +71,9 @@ async def upload_to_tg(
     if os.path.isdir(local_file_name):
         test = os.listdir(local_file_name)
         for item in test:
-            if any(item.endswith(s) for s in ext) or os.path.getsize(local_file_name) < int(10 * 1024 * 1024):
+            if any(item.endswith(s) for s in ext):
                 os.remove(os.path.join(local_file_name, item))
+                LOGGER.info(f"DEL EXT FILES: {item}")
         directory_contents = os.listdir(local_file_name)    
         directory_contents.sort()
         # number_of_files = len(directory_contents)
