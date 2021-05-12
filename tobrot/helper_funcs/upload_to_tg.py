@@ -157,10 +157,10 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
         with open("rclone.conf", "r+") as file:
             con = file.read()
             gUP = re.findall("\[(.*)\]", con)[0]
-            LOGGER.info(gUP)
+            #LOGGER.info(gUP)
     destination = f"{DESTINATION_FOLDER}"
     file_upload = str(Path(file_upload).resolve())
-    LOGGER.info(file_upload)
+    #LOGGER.info(file_upload)
     if os.path.isfile(file_upload):
         g_au = [
             "rclone",
@@ -275,12 +275,12 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
         # os.remove("filter1.txt")
         gau, tam = await gau_tam.communicate()
         gautam = gau.decode("utf-8")
-        LOGGER.info(gautam)
+        #LOGGER.info(gautam)
         LOGGER.info(tam.decode("utf-8"))
         # os.remove("filter1.txt")
         gautii = f"https://drive.google.com/folderview?id={gautam}"
         gjay = size(getFolderSize(file_upload))
-        LOGGER.info(gjay)
+        #LOGGER.info(gjay)
         button = []
         button.append(
             [pyrogram.InlineKeyboardButton(text="☁️ CloudUrl ☁️", url=f"{gautii}")]
@@ -288,7 +288,7 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
         if INDEX_LINK:
             indexurl = f"{INDEX_LINK}/{os.path.basename(file_upload)}/"
             tam_link = requests.utils.requote_uri(indexurl)
-            LOGGER.info(tam_link)
+            #LOGGER.info(tam_link)
             button.append(
                 [
                     pyrogram.InlineKeyboardButton(
