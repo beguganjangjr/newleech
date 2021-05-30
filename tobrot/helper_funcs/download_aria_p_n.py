@@ -63,7 +63,7 @@ async def add_torrent(aria_instance, torrent_file_path):
 
 
 async def add_download(aria_instance, text_url, c_file_name):
-    
+    options = None
     #uris = [text_url]
     #LOGGER.info(uris)
     #LOGGER.info(aria_instance)
@@ -80,13 +80,14 @@ async def add_download(aria_instance, text_url, c_file_name):
                 uris = [urisitring]
             except DirectDownloadLinkException as e:
                 LOGGER.info(f'{text_url}: {e}')
+            options = {
+                'follow-torrent': 'false',
+                'header': 'User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101 Firefox/78.0'
+            }    
     else:
         uris = [text_url]    
     try:
-        download = await loop.run_in_executor(None, partial(aria_instance.add_uris, uris, options={
-            'continue_downloads' : True
-            #'out': c_file_name
-        }))    
+        download = await loop.run_in_executor(None, partial(aria_instance.add_uris, uris, options=options))    
         #download = aria_instance.add_uris(uris, options=options)
         
     except Exception as e:
