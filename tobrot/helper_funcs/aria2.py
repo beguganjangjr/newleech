@@ -29,22 +29,23 @@ async def aria_start():
     #conf = None
       
     if os.path.exists("epic.conf"):
-      with open("epic.conf", "r") as f:
-         conf = f.read()        
-      if "bt-tracker" in conf:
-         conf = re.sub("bt-tracker=.*?", "bt-tracker=" + resp.text, conf)
-      else:
-         conf = conf + "\nbt-tracker=" + resp.text + "\n"
-      #print(conf)
       with open("epic.conf", "w+") as f:
+         conf = f.read()
+         if "bt-tracker" in conf:
+            conf = re.sub("bt-tracker=.*?", "bt-tracker=" + resp.text, conf)
+         else:
+            conf = conf + "\nbt-tracker=" + resp.text + "\n"
+      #print(conf)
+      #with open("epic.conf", "w+") as f:
          f.write(conf)
-         cmd.append("--conf-path=epic.conf")         
-    elif not os.path.exists("epic.conf"):
-        with open("epic.conf", "w+", newline="\n", encoding="utf-8") as f:
-            f.write(f"{ARIA_CONF}")  
-            cmd.append("--conf-path=epic.conf")
-    else:
-      cmd.append(f"--bt-tracker={resp.text}")
+         cmd.append("--conf-path=epic.conf")
+         f.close()
+    #elif not os.path.exists("epic.conf"):
+    #    with open("epic.conf", "w+", newline="\n", encoding="utf-8") as f:
+    #        f.write(f"{ARIA_CONF}")  
+    #        cmd.append("--conf-path=epic.conf")
+    #else:
+    #  cmd.append(f"--bt-tracker={resp.text}")
 
     LOGGER.info(cmd)
     process = await asyncio.create_subprocess_exec(
