@@ -11,7 +11,7 @@ LOGGER = logging.getLogger(__name__)
 from functools import partial
 
 loop = asyncio.get_event_loop()
-resp = requests.get('https://trackerslist.com/best_aria2.txt')
+resp = requests.get('https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/best_aria2.txt')
 
    
 async def aria_start():
