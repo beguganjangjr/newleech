@@ -29,12 +29,13 @@ async def aria_start():
     #conf = None
       
     if os.path.exists("epic.conf"):
-      with open("epic.conf", "r", encoding="UTF-8") as f:
-         content = re.sub("bt-tracker=.+", "bt-tracker=" + resp.text, f.read())
+      with open("epic.conf", "a+", encoding="UTF-8") as f:
+         #content = re.sub("bt-tracker=.+", "bt-tracker=" + resp.text, f.read())
+         f.write("\n" + "bt-tracker=" + resp.text)
          f.close()
-         print(content)
-         with open("epic.conf", "w", encoding="UTF-8") as f2:
-             f2.write(content)
+         #print(content)
+         #with open("epic.conf", "w", encoding="UTF-8") as f2:
+          #   f2.write(content)
                
          
       #if "bt-tracker" in conf:
