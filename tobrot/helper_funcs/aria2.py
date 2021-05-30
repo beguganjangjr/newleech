@@ -33,6 +33,7 @@ async def aria_start():
          #content = re.sub("bt-tracker=.+", "bt-tracker=" + resp.text, f.read())
          f.write("\n" + "bt-tracker=" + resp.text)
          f.close()
+         cmd.append("--conf-path=epic.conf")
          #print(content)
          #with open("epic.conf", "w", encoding="UTF-8") as f2:
           #   f2.write(content)
