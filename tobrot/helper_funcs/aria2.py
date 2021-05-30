@@ -29,17 +29,28 @@ async def aria_start():
     #conf = None
       
     if os.path.exists("epic.conf"):
-      with open("epic.conf", "w+", newline="\n", encoding="utf-8") as f:
-         conf = f.read()
-         if "bt-tracker" in conf:
-            config = re.sub("bt-tracker=.*?", "bt-tracker=" + resp.text, conf)
-         else:
-            config = conf + "\nbt-tracker=" + resp.text + "\n"
-      #print(conf)
-      #with open("epic.conf", "w+") as f:
-         f.write(config)
-         cmd.append("--conf-path=epic.conf")
+      with open("epic.conf", "r", encoding="UTF-8") as f:
+         content = re.sub("bt-tracker=.+", "bt-tracker=" + resp, f.read())
          f.close()
+         print(content)
+         with open("epic.conf", "w", encoding="UTF-8") as f2:
+             f2.write(content)
+               
+         
+      #if "bt-tracker" in conf:
+      #  config = re.sub("bt-tracker=.*?", "bt-tracker=" + resp.text, conf)
+      #   f.write(config)
+      #   cmd.append("--conf-path=epic.conf")
+      #else:
+      #   config = conf + "\nbt-tracker=" + resp.text + "\n"
+      #   f.write(config)
+      #   cmd.append("--conf-path=epic.conf")
+      #print(config)
+      #f.close()
+      #with open("epic.conf", "w+") as f:
+      #f.write(config)
+      #   cmd.append("--conf-path=epic.conf")
+      #   f.close()
     #elif not os.path.exists("epic.conf"):
     #    with open("epic.conf", "w+", newline="\n", encoding="utf-8") as f:
     #        f.write(f"{ARIA_CONF}")  
